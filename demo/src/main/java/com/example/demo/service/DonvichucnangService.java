@@ -1,5 +1,9 @@
 package com.example.demo.service;
 
-public interface DonvichucnangService {
+import com.example.demo.dto.DonvichucnangDTO;
 
+import java.util.List;
+
+public interface DonvichucnangService {
+    public List<DonvichucnangDTO> getAll();
 }

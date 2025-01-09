@@ -1,6 +1,10 @@
 package com.example.demo.service;
 
 
-public interface DantocService {
+import com.example.demo.dto.DantocDTO;
 
+import java.util.List;
+
+public interface DantocService {
+    public List<DantocDTO> getAll();
 }
