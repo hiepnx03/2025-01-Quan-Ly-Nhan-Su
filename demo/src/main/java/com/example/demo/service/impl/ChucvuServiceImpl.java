@@ -1,17 +1,14 @@
 package com.example.demo.service.impl;
 
 
-import com.example.demo.controller.admin.ChucvuController;
 import com.example.demo.converter.ChucvuConverter;
 import com.example.demo.dto.ChucvuDTO;
 import com.example.demo.entity.Chucvu;
 import com.example.demo.repository.ChucvuRepository;
 import com.example.demo.service.ChucvuService;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,31 +23,47 @@ public class ChucvuServiceImpl implements ChucvuService {
         this.chucvuConverter = chucvuConverter;
     }
 
+
     @Override
     public List<ChucvuDTO> getAll() {
-        List<Chucvu> chucvuList = chucvuRepository.findAll();
-        return chucvuList.stream()
+        // Lấy danh sách tất cả chức vụ và chuyển đổi sang DTO
+        return chucvuRepository.findAll().stream()
                 .map(chucvuConverter::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public void delete(Long id, Integer version) {
-
-    }
-
-    @Override
     public ChucvuDTO getById(Long id) {
-        return null;
+        // Tìm kiếm chức vụ theo ID
+        Chucvu chucvu = chucvuRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
+        return chucvuConverter.toDTO(chucvu);
     }
 
     @Override
-    public ChucvuDTO update(ChucvuDTO chucvuDTO) {
-        return null;
+    public ChucvuDTO create(ChucvuDTO chucvuDTO) {
+        // Chuyển đổi DTO thành Entity và lưu vào cơ sở dữ liệu
+        Chucvu chucvu = chucvuConverter.toEntity(chucvuDTO);
+        Chucvu savedChucvu = chucvuRepository.save(chucvu);
+        return chucvuConverter.toDTO(savedChucvu);
     }
 
     @Override
-    public ChucvuDTO insert(ChucvuDTO chucvuDTO) {
-        return null;
+    public ChucvuDTO update(Long id, ChucvuDTO chucvuDTO) {
+        // Tìm kiếm chức vụ theo ID
+        Chucvu existingChucvu = chucvuRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
+        existingChucvu.setTenChucVu(chucvuDTO.getTenChucVu());
+        Chucvu updatedChucvu = chucvuRepository.save(existingChucvu);
+        return chucvuConverter.toDTO(updatedChucvu);
+    }
+
+    @Override
+    public void delete(Long id) {
+        // Kiểm tra chức vụ có tồn tại không
+        if (!chucvuRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy Chức vụ với ID: " + id);
+        }
+        chucvuRepository.deleteById(id);
     }
 }

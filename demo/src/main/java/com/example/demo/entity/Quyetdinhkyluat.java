@@ -32,10 +32,10 @@ public class Quyetdinhkyluat implements Serializable {
 	private Integer version = 0;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "donViChucNangQdkl_id", foreignKey = @ForeignKey(name = "donViChucNangQdkl_id"))
+	@JoinColumn(name = "don_vi_chuc_nang_id",referencedColumnName = "id")
 	private Donvichucnang donvichucnang;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "canBoQdkl_id", foreignKey = @ForeignKey(name = "canBoQdkl_id"))
+	@JoinColumn(name = "can_bo_id",referencedColumnName = "id")
 	private Canbo canbo;
 }

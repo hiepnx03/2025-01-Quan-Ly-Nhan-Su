@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Data
@@ -14,4 +15,10 @@ public class Quequan implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String tenQueQuan;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "can_bo_id", nullable = false)
+	private Canbo canbo; // Liên kết với Canbo
+
+
 }

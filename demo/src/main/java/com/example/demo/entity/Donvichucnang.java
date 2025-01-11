@@ -6,7 +6,9 @@ import org.hibernate.annotations.FetchMode;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import jakarta.persistence.*;
 
@@ -22,15 +24,17 @@ public class Donvichucnang implements Serializable {
     private String maDonVi;
     private String tenDonVi;
     @Version
-    @Column(name = "VERSION", nullable = false)
+    @Column(name = "VERSION", nullable = true)
     private Integer version = 0;
 	
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(mappedBy = "donvichucnang",fetch = FetchType.LAZY)
-    private Set<Bomon> boMons = new HashSet<>();
+    @OneToMany(mappedBy = "donvichucnang",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Bomon> boMons;
 
-    @Fetch(FetchMode.SUBSELECT)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "donvichucnang", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Canbo> canBos = new HashSet<>();
+    private List<Canbo> canBos = new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "donvichucnang",fetch = FetchType.LAZY)
+    private List<Quyetdinhkyluat> quyetdinhkyluats = new ArrayList<>();
 
 }

@@ -19,7 +19,7 @@ public class DantocConverter  {
         return modelMapper.map(dantoc, DantocDTO.class);
     }
 
-    public Dantoc fromDTO(DantocDTO dantocDTO) {
+    public Dantoc toEntity(DantocDTO dantocDTO) {
         return modelMapper.map(dantocDTO, Dantoc.class);
     }
 }

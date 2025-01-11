@@ -1,17 +1,11 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.Bacluong;
-import com.example.demo.entity.Bomon;
-import com.example.demo.entity.Chucvu;
-import com.example.demo.entity.Dantoc;
-import com.example.demo.entity.Donvichucnang;
-import com.example.demo.entity.Quequan;
-import com.example.demo.entity.Tongiao;
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 public class CanboDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -58,6 +52,8 @@ public class CanboDTO implements Serializable {
 	private double phuCaidhac;
 
 	private Integer version = 0;
+	private Boolean enabled;
+
 
 	private Date ngayNhapNgu;
 	private Date ngayXuatNgu;
@@ -72,12 +68,25 @@ public class CanboDTO implements Serializable {
 	private Date ngayVaoDcsvnDuBi;
 	private Date ngayVaoDcsvnChinhThuc;
 
-	private DonvichucnangDTO donvichucnangDTO;
-	private BomonDTO bomonDTO;
-	private QuequanDTO quequanDTO;
-	private DantocDTO dantocDTO;
+
+	// 1-n canbo - quequan
+	private List<QuequanDTO> quequanDTOS;
+
+
+	// n-1 canbo - tongiao
 	private TongiaoDTO tongiaoDTO;
+	// n-1 canbo - chucvu
 	private ChucvuDTO chucvuDTO;
+
+	// n-1 canbo - donvichucnang
+	private DonvichucnangDTO donvichucnangDTO;
+
+	// n-1 canbo - bomon
+	private BomonDTO bomonDTO;
+	// n-1 canbo - dantoc
+	private DantocDTO dantocDTO;
+	// n-1 canbo - ngachcongchubng
 	private NgachcongchucDTO ngachcongchucDTO;
+	// n-1 canbo - bacluong
 	private BacluongDTO bacluongDTO;
 }

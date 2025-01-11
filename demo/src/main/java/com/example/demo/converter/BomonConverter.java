@@ -2,7 +2,10 @@ package com.example.demo.converter;
 
 
 import com.example.demo.dto.BomonDTO;
+import com.example.demo.dto.DonvichucnangDTO;
+import com.example.demo.dto.TongiaoDTO;
 import com.example.demo.entity.Bomon;
+import com.example.demo.entity.Donvichucnang;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -17,9 +20,11 @@ public class BomonConverter {
 
 
     public BomonDTO toDTO(Bomon bomon) {
-        return modelMapper.map(bomon, BomonDTO.class);
+        BomonDTO bomonDTO = modelMapper.map(bomon, BomonDTO.class);
+        return bomonDTO;
     }
     public Bomon toEntity(BomonDTO bomonDTO) {
-        return modelMapper.map(bomonDTO, Bomon.class);
+        Bomon bomon = modelMapper.map(bomonDTO, Bomon.class);
+        return bomon;
     }
 }

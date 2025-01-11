@@ -32,14 +32,14 @@ public class Quyetdinh implements Serializable {
 	private Integer version = 0;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "don_vi_chuc_nang_id", foreignKey = @ForeignKey(name = "donViChucNangQd_id"))
+	@JoinColumn(name = "don_vi_chuc_nang_id", referencedColumnName = "id")
 	private Donvichucnang donvichucnang;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "can_bo_id", foreignKey = @ForeignKey(name = "canBoQd_id"))
+	@JoinColumn(name = "can_bo_id", referencedColumnName = "id")
 	private Canbo canbo;
 
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "loai_quyet_dinh_id", foreignKey = @ForeignKey(name = "loaiQuyetDinhQd_id"))
+	@JoinColumn(name = "loai_quyet_dinh_id",referencedColumnName = "id")
 	private Loaiquyetdinh loaiquyetdinh;
 }

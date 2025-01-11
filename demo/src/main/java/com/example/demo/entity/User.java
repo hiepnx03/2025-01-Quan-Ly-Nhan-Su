@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.entity.constant.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -21,6 +21,6 @@ public class KekhaitaisanServiceImpl implements KekhaitaisanService {
     @Override
     public List<KekhaitaisanDTO> getAll() {
         List<Kekhaitaisan> kekhaitaisanList = kekhaitaisanRepository.findAll();
-        return kekhaitaisanList.stream().map(kekhaitaisanConverter::toDTO).collect(Collectors.toList();
+        return kekhaitaisanList.stream().map(kekhaitaisanConverter::toDTO).collect(Collectors.toList());
     }
 }

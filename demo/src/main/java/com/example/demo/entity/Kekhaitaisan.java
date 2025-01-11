@@ -14,17 +14,22 @@ public class Kekhaitaisan implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "don_vi_chuc_nang_id",referencedColumnName = "id")
-	private Donvichucnang donvichucnang;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "can_bo_id", referencedColumnName = "id")
-	private Canbo canbo;
+	private String fileKeKhai;
+
 	@Temporal(TemporalType.DATE)
 	private Date ngayKeKhai;
-	private String fileKeKhai;
+
 	@Version
 	@Column(name = "VERSION", nullable = false)
 	private Integer version = 0;
+
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "don_vi_chuc_nang_id",referencedColumnName = "id")
+	private Donvichucnang donvichucnang;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "can_bo_id", referencedColumnName = "id")
+	private Canbo canbo;
 
 }

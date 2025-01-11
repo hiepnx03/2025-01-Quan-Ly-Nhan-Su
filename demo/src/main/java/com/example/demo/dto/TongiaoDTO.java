@@ -11,4 +11,5 @@ public class TongiaoDTO implements Serializable {
 	private String tenTonGiao;
 
 	private Integer version = 0;
+
 }

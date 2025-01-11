@@ -16,6 +16,6 @@ public class Bomon implements Serializable {
 	private String tenBoMon;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "don_vi_chuc_nang_id", nullable = false) // Foreign key column name
+	@JoinColumn(name = "don_vi_chuc_nang_id", nullable = true) // Foreign key column name
 	private Donvichucnang donvichucnang;
 }

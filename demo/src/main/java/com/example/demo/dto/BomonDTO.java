@@ -11,5 +11,5 @@ public class BomonDTO implements Serializable {
 	private Long id;
 	private String tenBoMon;
 
-	private DonvichucnangDTO donvichucnangDTO;
+
 }

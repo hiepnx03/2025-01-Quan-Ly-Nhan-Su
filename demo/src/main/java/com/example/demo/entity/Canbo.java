@@ -5,6 +5,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "canbo")
@@ -48,7 +50,7 @@ public class Canbo implements Serializable {
 	private String tinhTrangSucKhoe;
 
 	private Integer soTruongCongTac;
-
+	private Boolean enabled = true;
 	private double chieuCao;
 	private double canNang;
 	private double phuCapChucVu;
@@ -83,35 +85,40 @@ public class Canbo implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date ngayVaoDcsvnChinhThuc;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "don_vi_chuc_nang_id",nullable = false)
-	private Donvichucnang donvichucnang;
+	@OneToMany(mappedBy = "canbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Quequan> quequans; // Danh sách quê quán của cán bộ
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bo_mon_id",nullable = false)
-	private Bomon bomon;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "que_quan_id",nullable = false)
-	private Quequan quequan;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "dan_toc_id",nullable = false)
+	@JoinColumn(name = "dan_toc_id",nullable = true)
 	private Dantoc dantoc;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ton_giao_id",nullable = false)
+	@JoinColumn(name = "ton_giao_id",nullable = true)
 	private Tongiao tongiao;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "chuc_vu_id",nullable = false)
+	@JoinColumn(name = "chuc_vu_id",nullable = true)
 	private Chucvu chucvu;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ngach_cong_chuc_id",nullable = false)
-	private Ngachcongchuc ngachcongchuc;
+
+	@OneToMany(mappedBy = "canbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Quyetdinhkyluat> quyetdinhkyluats;
+
+
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "bac_luong_id",nullable = false)
+	@JoinColumn(name = "don_vi_chuc_nang_id",nullable = true)
+	private Donvichucnang donvichucnang;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "bo_mon_id",nullable = true)
+	private Bomon bomon;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ngach_cong_chuc_id",nullable = true)
+	private Ngachcongchuc ngachcongchuc;
+
+	@ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	@JoinColumn(name = "bac_luong_id",nullable = true)
 	private Bacluong bacluong;
 }

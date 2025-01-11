@@ -18,7 +18,7 @@ public class Bacluong implements Serializable {
 	private double phuCapVuotKhung;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ngach_cong_chuc_id") // Ensure this matches the actual foreign key column
+	@JoinColumn(name = "ngach_cong_chuc_id", nullable = true) // Ensure this matches the actual foreign key column
 	private Ngachcongchuc ngachcongchuc;
 
 

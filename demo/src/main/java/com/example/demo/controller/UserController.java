@@ -55,4 +55,8 @@ public class UserController {
         String message = passwordHistoryService.changePassword(userId, request.getOldPassword(), request.getNewPassword());
         return ResponseEntity.ok(new ChangePasswordResponse(message));
     }
+
+
+
+
 }
