@@ -6,9 +6,10 @@
 - Modelmapper 3.2.1
 - Lombok 1.18.36
 - Swagger 2.2.0
-- 
+  
 # Features
 - Forgot password send gmail to account
+- Pagination
   
 # Installation and Setup
 1. Clone the repository: `git clone https://github.com/hiepnx03/2025-01-Quan-Ly-Nhan-Su.git`
