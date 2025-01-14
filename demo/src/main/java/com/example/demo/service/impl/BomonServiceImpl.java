@@ -3,13 +3,18 @@ package com.example.demo.service.impl;
 
 import com.example.demo.converter.BomonConverter;
 import com.example.demo.dto.BomonDTO;
+import com.example.demo.dto.CanboDTO;
 import com.example.demo.entity.Bomon;
+import com.example.demo.entity.Canbo;
 import com.example.demo.entity.Donvichucnang;
 import com.example.demo.entity.Quequan;
 import com.example.demo.repository.BomonRepository;
 import com.example.demo.repository.DonvichucnangRepository;
 import com.example.demo.service.BomonService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +33,14 @@ public class BomonServiceImpl implements BomonService {
         return bomonRepository.findAll().stream()
                 .map(bomonConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<BomonDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Bomon> bomonPage = bomonRepository.getAllPage(pageable);
+        Page<BomonDTO> bomonDTOPage = bomonPage.map(bomonConverter::toDTO);
+        return bomonDTOPage;
     }
 
     @Override

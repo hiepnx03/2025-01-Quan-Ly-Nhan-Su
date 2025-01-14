@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.CanboDTO;
+import com.example.demo.constants.PageableConstant;
 import com.example.demo.viewmodel.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +32,18 @@ public class ChucvuController {
     public ResponseEntity<ResponseObject> getAll() {
         List<ChucvuDTO> result = chucvuService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Danh sách chức vụ", result));
+    }
+
+
+    @GetMapping("/page")
+    @Operation(summary = "Get all chức vụ", description = "Lấy danh sách tất cả các chức vụ từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public ResponseEntity<Page<ChucvuDTO>> getAllPage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<ChucvuDTO> chucvuDTOPage = chucvuService.getAllPage(pageNo, pageSize);
+        return ResponseEntity.ok(chucvuDTOPage);
     }
 
     @GetMapping("/{id}")

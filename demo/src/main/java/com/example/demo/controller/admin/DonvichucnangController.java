@@ -1,5 +1,6 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.BomonDTO;
 import com.example.demo.dto.DonvichucnangDTO;
 import com.example.demo.dto.response.ResponseObject;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,17 @@ public class DonvichucnangController {
         List<DonvichucnangDTO> list = donvichucnangService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Danh sách đơn vị chức năng", list));
     }
+
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<DonvichucnangDTO>> getAllPage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<DonvichucnangDTO> donvichucnangDTOPage = donvichucnangService.getAllPage(pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(donvichucnangDTOPage);
+    }
+
 
     @GetMapping("/{id}")
     @ApiResponses(value = {

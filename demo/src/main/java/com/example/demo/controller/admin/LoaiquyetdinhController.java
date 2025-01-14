@@ -1,7 +1,9 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.DonvichucnangDTO;
 import com.example.demo.dto.LoaiquyetdinhDTO;
+import com.example.demo.dto.QuyetdinhDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.LoaiquyetdinhService;
 import com.example.demo.viewmodel.ErrorVm;
@@ -11,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +32,17 @@ public class LoaiquyetdinhController  {
     public ResponseEntity<ResponseObject> getAll() {
         List<LoaiquyetdinhDTO> list = loaiquyetdinhService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Danh sách loại quyết định", list));
+    }
+
+    @GetMapping("/page")
+    @Operation(summary = "Get all loại quyết định", description = "Lấy danh sách loại quyết định từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public ResponseEntity<Page<LoaiquyetdinhDTO>> getAllPage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<LoaiquyetdinhDTO> loaiquyetdinhDTOPage = loaiquyetdinhService.getAllPage(pageNo, pageSize);
+        return ResponseEntity.ok(loaiquyetdinhDTOPage);
     }
 
     @GetMapping("/{id}")

@@ -7,6 +7,9 @@ import com.example.demo.entity.Dantoc;
 import com.example.demo.repository.DantocRepository;
 import com.example.demo.service.DantocService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +28,14 @@ public class DantocServiceImpl implements DantocService {
         return dantocRepository.findAll().stream()
                 .map(dantocConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<DantocDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Dantoc> dantocPage = dantocRepository.findAllPage(pageable);
+        Page<DantocDTO> dantocDTOPage = dantocPage.map(dantocConverter::toDTO);
+        return dantocDTOPage;
     }
 
     @Override

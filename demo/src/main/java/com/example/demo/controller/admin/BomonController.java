@@ -1,5 +1,6 @@
 package com.example.demo.controller.admin;
 
+import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.BomonDTO;
 import com.example.demo.dto.CanboDTO;
 import com.example.demo.dto.response.ResponseObject;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +31,18 @@ public class BomonController {
     public ResponseEntity<ResponseObject> getAll() {
         List<BomonDTO> list = bomonService.getAll();
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Danh sách bộ môn", list));
+    }
+
+
+    @GetMapping("/page")
+    @Operation(summary = "Get all bomon", description = "Lấy danh sách bộ môn từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public ResponseEntity<Page<BomonDTO>> getAllPage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<BomonDTO> bomonDTOPage = bomonService.getAllPage(pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK).body(bomonDTOPage);
     }
 
     @GetMapping("/{id}")

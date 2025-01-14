@@ -7,6 +7,9 @@ import com.example.demo.entity.Tongiao;
 import com.example.demo.repository.TongiaoRepository;
 import com.example.demo.service.TongiaoService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +26,14 @@ public class TongiaoServiceImpl implements TongiaoService {
         return tongiaoRepository.findAll().stream()
                 .map(tongiaoConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<TongiaoDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Tongiao> tongiaoPage = tongiaoRepository.findAllPage(pageable);
+        Page<TongiaoDTO> tongiaoDTOPage = tongiaoPage.map(tongiaoConverter::toDTO);
+        return tongiaoDTOPage;
     }
 
     @Override
@@ -56,4 +67,6 @@ public class TongiaoServiceImpl implements TongiaoService {
         }
         tongiaoRepository.deleteById(id);
     }
+
+
 }

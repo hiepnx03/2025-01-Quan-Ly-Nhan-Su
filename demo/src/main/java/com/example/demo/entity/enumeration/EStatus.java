@@ -1,4 +1,4 @@
-package com.example.demo.entity.constant.enums;
+package com.example.demo.entity.enumeration;
 
 import lombok.Getter;
 

@@ -13,6 +13,9 @@ import com.example.demo.repository.LoaiquyetdinhRepository;
 import com.example.demo.repository.QuyetdinhRepository;
 import com.example.demo.service.QuyetdinhService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +35,14 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
         return quyetdinhRepository.findAll().stream()
                 .map(quyetdinhConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<QuyetdinhDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Quyetdinh> quyetdinhPage = quyetdinhRepository.findAllPage(pageable);
+        Page<QuyetdinhDTO> quyetdinhDTOPage = quyetdinhPage.map(quyetdinhConverter::toDTO);
+        return quyetdinhDTOPage;
     }
 
     @Override

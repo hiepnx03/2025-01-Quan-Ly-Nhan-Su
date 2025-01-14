@@ -3,12 +3,14 @@ package com.example.demo.service;
 
 import com.example.demo.dto.CanboDTO;
 import com.example.demo.entity.Canbo;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface CanboService {
     public List<CanboDTO> getAll();
-
+    public Page<CanboDTO> getCanboEnablePage(int pageNo, int pageSize);
+    public Page<CanboDTO> getCanboDisablePage(int pageNo, int pageSize);
     public CanboDTO getById(Long id);
 
     public CanboDTO save(CanboDTO canboDTO);

@@ -1,12 +1,17 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.converter.DonvichucnangConverter;
+import com.example.demo.dto.BomonDTO;
 import com.example.demo.dto.DonvichucnangDTO;
+import com.example.demo.entity.Bomon;
 import com.example.demo.entity.Canbo;
 import com.example.demo.entity.Donvichucnang;
 import com.example.demo.repository.DonvichucnangRepository;
 import com.example.demo.service.DonvichucnangService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +28,14 @@ public class DonvichucnangServiceImpl implements DonvichucnangService {
         List<Donvichucnang> donvichucnangList = donvichucnangRepository.findAll();
 
         return donvichucnangList.stream().map(donvichucnangConverter::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<DonvichucnangDTO> getAllPage (int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo , pageSize);
+        Page<Donvichucnang> donvichucnangPage = donvichucnangRepository.getAllPage(pageable);
+        Page<DonvichucnangDTO> donvichucnangDTOPage = donvichucnangPage.map(donvichucnangConverter::toDTO);
+        return donvichucnangDTOPage;
     }
 
     @Override

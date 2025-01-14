@@ -1,4 +1,4 @@
-package com.example.demo.entity.constant;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

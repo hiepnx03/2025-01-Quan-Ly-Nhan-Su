@@ -22,4 +22,8 @@ public interface UserService {
     void resetPassword(String verificationCode, String password);
     Boolean verify(String verificationCode);
     Page<UserResponse> getAll(int page, int size);
+
+
+    public Page<UserDTO> getAllByDisablePage(int pageNo, int pageSize);
+    public Page<UserDTO> getAllByEnablePage(int pageNo, int pageSize);
 }

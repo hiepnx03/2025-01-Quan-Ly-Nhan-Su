@@ -12,6 +12,9 @@ import com.example.demo.service.CanboService;
 import com.example.demo.service.DonvichucnangService;
 import com.example.demo.service.NgachcongchucService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,6 +44,23 @@ public class CanboServiceImpl implements CanboService {
                 .map(canboConverter::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public Page<CanboDTO> getCanboEnablePage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canBoPage = canBoRepository.findAllEnabledPage(pageable);
+        Page<CanboDTO> canBoDTOPage = canBoPage.map(canboConverter::toDTO);
+        return canBoDTOPage;
+    }
+
+    @Override
+    public Page<CanboDTO> getCanboDisablePage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canBoPage = canBoRepository.findAllDisabledPage(pageable);
+        Page<CanboDTO> canBoDTOPage = canBoPage.map(canboConverter::toDTO);
+        return canBoDTOPage;
+    }
+
 
     @Override
     public CanboDTO getById(Long id) {

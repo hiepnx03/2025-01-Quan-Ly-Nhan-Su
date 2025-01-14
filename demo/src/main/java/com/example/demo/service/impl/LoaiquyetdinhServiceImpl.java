@@ -7,6 +7,9 @@ import com.example.demo.entity.Loaiquyetdinh;
 import com.example.demo.repository.LoaiquyetdinhRepository;
 import com.example.demo.service.LoaiquyetdinhService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,14 @@ public class LoaiquyetdinhServiceImpl implements LoaiquyetdinhService {
         return loaiquyetdinhRepository.findAll().stream()
                 .map(loaiquyetdinhConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<LoaiquyetdinhDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable  pageable = PageRequest.of(pageNo, pageSize);
+        Page<Loaiquyetdinh> loaiquyetdinhPage = loaiquyetdinhRepository.findAllPage(pageable);
+        Page<LoaiquyetdinhDTO> loaiquyetdinhDTOPage =loaiquyetdinhPage.map(loaiquyetdinhConverter::toDTO);
+        return loaiquyetdinhDTOPage;
     }
 
     @Override

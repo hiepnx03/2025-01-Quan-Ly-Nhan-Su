@@ -7,6 +7,9 @@ import com.example.demo.entity.Chucvu;
 import com.example.demo.repository.ChucvuRepository;
 import com.example.demo.service.ChucvuService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,6 +33,14 @@ public class ChucvuServiceImpl implements ChucvuService {
         return chucvuRepository.findAll().stream()
                 .map(chucvuConverter::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<ChucvuDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable  = PageRequest.of(pageNo, pageSize);
+        Page<Chucvu> chucvuPage = chucvuRepository.getAllPageable(pageable);
+        Page<ChucvuDTO> chucvuDTOPage = chucvuPage.map(chucvuConverter::toDTO);
+        return chucvuDTOPage;
     }
 
     @Override

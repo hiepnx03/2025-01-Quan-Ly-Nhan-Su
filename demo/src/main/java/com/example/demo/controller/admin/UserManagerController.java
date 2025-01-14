@@ -1,6 +1,7 @@
 package com.example.demo.controller.admin;
 
 
+import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.QuyetdinhkyluatDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.response.ResponseObject;
@@ -43,6 +44,28 @@ public class UserManagerController {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", "Get failed!", ""));
         }
 
+    }
+
+    @GetMapping("/enable")
+    @Operation(summary = "Get all user", description = "Lấy danh sách user từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public ResponseEntity<Page<UserDTO>> getAllByEnablePage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<UserDTO> userDTOPage = userService.getAllByEnablePage(pageNo, pageSize);
+        return ResponseEntity.ok(userDTOPage);
+    }
+
+    @GetMapping("/disable")
+    @Operation(summary = "Get all user", description = "Lấy danh sách user từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
+    public ResponseEntity<Page<UserDTO>> getAllByDisablePage(
+            @RequestParam(value = "pageNo", defaultValue = PageableConstant.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = PageableConstant.DEFAULT_PAGE_SIZE, required = false) int pageSize
+    ) {
+        Page<UserDTO> userDTOPage = userService.getAllByDisablePage(pageNo, pageSize);
+        return ResponseEntity.ok(userDTOPage);
     }
 
     @GetMapping("/{id}")

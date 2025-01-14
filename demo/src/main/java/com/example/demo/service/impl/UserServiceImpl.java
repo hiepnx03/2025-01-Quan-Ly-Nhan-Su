@@ -6,16 +6,18 @@ import com.example.demo.dto.request.LoginRequest;
 import com.example.demo.dto.response.UserResponse;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
-import com.example.demo.entity.constant.enums.ERole;
+import com.example.demo.entity.enumeration.ERole;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.UserService;
-import com.example.demo.util.JwtUtils;
+import com.example.demo.utils.JwtUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -84,6 +86,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public Page<UserResponse> getAll(int page, int size) {
         return null;
+    }
+
+    @Override
+    public Page<UserDTO> getAllByEnablePage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<User> userPage = userRepository.findAllByEnabledPage(pageable);
+        Page<UserDTO> userDTOPage = userPage.map(userConverter::convertToDto);
+        return userDTOPage;
+    }
+
+    @Override
+    public Page<UserDTO> getAllByDisablePage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<User> userPage = userRepository.findAllByDisablePage(pageable);
+        Page<UserDTO> userDTOPage = userPage.map(userConverter::convertToDto);
+        return userDTOPage;
     }
 
     @Override

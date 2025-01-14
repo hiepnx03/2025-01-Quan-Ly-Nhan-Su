@@ -9,6 +9,9 @@ import com.example.demo.repository.CanboRepository;
 import com.example.demo.repository.QuyetdinhkyluatRepository;
 import com.example.demo.service.QuyetdinhkyluatService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -78,5 +81,13 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
             throw new RuntimeException("Không tìm thấy quyết định kỷ luật với ID: " + id);
         }
         quyetdinhkyluatRepository.deleteById(id);
+    }
+
+    @Override
+    public Page<QuyetdinhkyluatDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Quyetdinhkyluat> quyetdinhkyluatPage = quyetdinhkyluatRepository.findAllPage(pageable);
+        Page<QuyetdinhkyluatDTO> quyetdinhkyluatDTOPage = quyetdinhkyluatPage.map(quyetdinhkyluatConverter::toDTO);
+        return quyetdinhkyluatDTOPage;
     }
 }
