@@ -5,4 +5,11 @@
 - .JWT Authentication (0.11.5)
 - Modelmapper 3.2.2
 - Lombok 1.18.36
+- Swagger
 
+![25-01-14 Swagger-ui-index-html](https://github.com/user-attachments/assets/fb2252c5-ccdf-4b74-ab9f-73011ea83269)
+
+
+# References
+- https://github.com/nashtech-garage/yas
+- https://github.com/diepvv/quan-ly-nhan-su
