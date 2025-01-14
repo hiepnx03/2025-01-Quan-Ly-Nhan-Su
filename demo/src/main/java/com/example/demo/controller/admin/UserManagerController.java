@@ -1,12 +1,20 @@
 package com.example.demo.controller.admin;
 
 
+import com.example.demo.dto.QuyetdinhkyluatDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.dto.response.UserResponse;
 import com.example.demo.service.UserService;
+import com.example.demo.viewmodel.ErrorVm;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
@@ -19,16 +27,18 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/admin/user")
+@RequestMapping("/api/admin/user")
 public class UserManagerController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Get all user", description = "Lấy danh sách user từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping("/all")
     public ResponseEntity<ResponseObject> user(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
         try {
             Page<UserResponse> user = userService.getAll(page, size);
-            return ResponseEntity.ok().body(new ResponseObject("ok", "Get user successfully!", user));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Get user successfully!", user));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", "Get failed!", ""));
         }
@@ -36,21 +46,33 @@ public class UserManagerController {
     }
 
     @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
     public ResponseEntity<ResponseObject> getById(@PathVariable("id") Long id) {
         try {
             UserDTO user = userService.getUserById(id);
-            return ResponseEntity.ok().body(new ResponseObject("ok", "Get user successfully!", user));
+            return ResponseEntity.ok().body(new ResponseObject("200", "Get user successfully!", user));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponseObject("failed", "Get failed!", ""));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("failed", "Get failed!", ""));
         }
 
     }
 
     @PostMapping("/add")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<ResponseObject> add(@RequestBody UserDTO userDTO) {
         try {
             UserResponse userResponse = userService.add(userDTO);
-            return ResponseEntity.ok().body(new ResponseObject("ok", "Added product successful!", userResponse));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Added product successful!", userResponse));
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), null));

@@ -1,4 +1,4 @@
-package com.example.demo.viewmodel.error;
+package com.example.demo.viewmodel;
 
 import java.util.ArrayList;
 import java.util.List;

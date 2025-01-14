@@ -8,6 +8,11 @@ import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.UserService;
 import com.example.demo.util.JwtUtils;
 import com.example.demo.util.TokenBlacklist;
+import com.example.demo.viewmodel.ErrorVm;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.query.Param;
@@ -31,11 +36,17 @@ public class AuthenticationController {
     private final JwtUtils jwtUtils;
 
     @PostMapping("/login")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = @Content(schema = @Schema(implementation = LoginRequest.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
             Map<String, String> tokens = userService.login(loginRequest);
             System.out.println("Thành công: " + tokens);
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Login successful", tokens));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Login successful", tokens));
         } catch (RuntimeException e) {
             System.out.println("Thất bại: " + e.getMessage());
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), ""));
@@ -56,7 +67,7 @@ public class AuthenticationController {
             String newAccessToken = userService.refreshToken(refreshToken);
 
             // Trả về access token mới
-            return ResponseEntity.ok(new ResponseObject("ok", "Token refreshed successfully", Map.of("access_token", newAccessToken)));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Token refreshed successfully", Map.of("access_token", newAccessToken)));
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), ""));
         } catch (Exception e) {
@@ -75,13 +86,19 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = @Content(schema = @Schema(implementation = UserDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<?> processRegister(@RequestBody UserDTO userDTO) {
         try {
             userService.register(userDTO);
 
             System.out.println(userDTO.getUserName());
             System.out.println(userDTO.getRoles());
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Register successful. Please check your mail to verify!", userDTO));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Register successful. Please check your mail to verify!", userDTO));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), ""));
         }
@@ -92,7 +109,7 @@ public class AuthenticationController {
     public ResponseEntity<ResponseObject> processForgotPassword(@RequestParam String email) {
         try {
             userService.forgotPassword(email, frontendUrl);
-            return ResponseEntity.ok().body(new ResponseObject("ok", "Sent mail to reset password", "Please check mail to reset password!"));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Sent mail to reset password", "Please check mail to reset password!"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), ""));
         }
@@ -102,7 +119,7 @@ public class AuthenticationController {
     public ResponseEntity<ResponseObject> changePassword(@RequestBody ResetPasswordRequest resetPasswordRequest) {
         try {
             userService.resetPassword(resetPasswordRequest.getVerifyCode(), resetPasswordRequest.getPassword());
-            return ResponseEntity.ok().body(new ResponseObject("ok", "Reset password successful!", "Reset password successful!"));
+            return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Reset password successful!", "Reset password successful!"));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", e.getMessage(), ""));
 
@@ -119,7 +136,7 @@ public class AuthenticationController {
     @GetMapping("/verify")
     public ResponseEntity<ResponseObject> verifyUser(@Param("code") String code) {
         if (userService.verify(code)) {
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("ok", "Successful verification!", "Xác minh email thành công!"));
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Successful verification!", "Xác minh email thành công!"));
 
         } else {
             return ResponseEntity.badRequest().body(new ResponseObject("failed", "Verification failed!", "Xác minh email thất bại!"));

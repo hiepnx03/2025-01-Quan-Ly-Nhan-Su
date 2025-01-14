@@ -1,48 +1,84 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ChucvuDTO;
 import com.example.demo.dto.TongiaoDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.TongiaoService;
+import com.example.demo.viewmodel.ErrorVm;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/tongiao")
+@RequestMapping("/api/tongiao")
 @AllArgsConstructor
 public class TongiaoController {
 
     private final TongiaoService tongiaoService;
 
+    @Operation(summary = "Get all tôn giáo", description = "Lấy danh sách tất cả các tôn giáo từ hệ thống")
+    @ApiResponse(responseCode = "200", description = "Success")
     @GetMapping
     public ResponseEntity<ResponseObject> getAll() {
         List<TongiaoDTO> result = tongiaoService.getAll();
-        return ResponseEntity.ok(new ResponseObject("200", "Danh sách tôn giáo", result));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Danh sách tôn giáo", result));
     }
 
     @GetMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         TongiaoDTO result = tongiaoService.getById(id);
-        return ResponseEntity.ok(new ResponseObject("200", "Chi tiết tôn giáo", result));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Chi tiết tôn giáo", result));
     }
 
     @PostMapping
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Created",
+                    content = @Content(schema = @Schema(implementation = TongiaoDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<ResponseObject> create(@RequestBody TongiaoDTO tongiaoDTO) {
         TongiaoDTO created = tongiaoService.create(tongiaoDTO);
-        return ResponseEntity.ok(new ResponseObject("200", "Tạo mới tôn giáo thành công", created));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseObject("201", "Tạo mới tôn giáo thành công", created));
     }
 
     @PutMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<ResponseObject> update(@PathVariable Long id, @RequestBody TongiaoDTO tongiaoDTO) {
         TongiaoDTO updated = tongiaoService.update(id, tongiaoDTO);
-        return ResponseEntity.ok(new ResponseObject("200", "Cập nhật tôn giáo thành công", updated));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new ResponseObject("202", "Cập nhật tôn giáo thành công", updated));
     }
 
     @DeleteMapping("/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "No content", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
     public ResponseEntity<ResponseObject> delete(@PathVariable Long id) {
         tongiaoService.delete(id);
-        return ResponseEntity.ok(new ResponseObject("200", "Xóa tôn giáo thành công", null));
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseObject("204", "Xóa tôn giáo thành công", null));
     }
 }
