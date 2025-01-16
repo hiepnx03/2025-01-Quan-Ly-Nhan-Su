@@ -2,6 +2,7 @@ package com.example.demo.converter;
 
 
 import com.example.demo.dto.*;
+import com.example.demo.entity.Bacluong;
 import com.example.demo.entity.Canbo;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -62,9 +63,23 @@ public class CanboConverter  {
             donvichucnangDTO.setId(canbo.getDonvichucnang().getId());
             donvichucnangDTO.setMaDonVi(canbo.getDonvichucnang().getMaDonVi());
             donvichucnangDTO.setTenDonVi(canbo.getDonvichucnang().getTenDonVi());
-
             donvichucnangDTO.setVersion(canbo.getDonvichucnang().getVersion());
+
+            canboDTO.setDonvichucnangDTO(donvichucnangDTO);
         }
+
+
+        // bac luong
+        if(canbo.getBacluong() != null) {
+            BacluongDTO bacluongDTO = new BacluongDTO();
+            bacluongDTO.setId(canbo.getBacluong().getId());
+            bacluongDTO.setHeSoLuong(canbo.getBacluong().getHeSoLuong());
+            bacluongDTO.setMaBacLuong(canbo.getBacluong().getMaBacLuong());
+            bacluongDTO.setPhuCapVuotKhung(canbo.getBacluong().getPhuCapVuotKhung());
+
+            canboDTO.setBacluongDTO(bacluongDTO);
+        }
+
 
 
         return canboDTO;
@@ -107,6 +122,18 @@ public class CanboConverter  {
             canbo.getDonvichucnang().setId(canboDTO.getDonvichucnangDTO().getId());
         }
 
+
+        // bac luong
+//        if(canboDTO.getBacluongDTO() != null) {
+//            canbo.getBacluong().setId(canboDTO.getBacluongDTO().getId());
+//        }
+
+        // Bỏ qua việc gán lại Bacluong nếu đã được thiết lập từ trước
+        if (canbo.getBacluong() == null && canboDTO.getBacluongDTO() != null) {
+            Bacluong bacluong = new Bacluong();
+            bacluong.setId(canboDTO.getBacluongDTO().getId());
+            canbo.setBacluong(bacluong);
+        }
 
         return canbo;
     }

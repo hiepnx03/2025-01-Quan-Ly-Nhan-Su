@@ -1,9 +1,5 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.Canbo;
-import com.example.demo.entity.Donvichucnang;
-import com.example.demo.entity.Loaihopdong;
-import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -25,7 +21,10 @@ public class HopdongcanboDTO implements Serializable {
 
 	private Integer version = 0;
 
+//	N-1 hopdongcanbo-donvichucnang
 	private DonvichucnangDTO donvichucnangDTO;
-	private CanboDTO canboDTO;
+//	N-1 hopdongcanbo-loaihopdong
 	private LoaihopdongDTO loaihopdongDTO;
+//	N-1 hopdongcanbo-canbo
+	private CanboDTO canboDTO;
 }

@@ -3,20 +3,24 @@ package com.example.demo.service.impl;
 
 import com.example.demo.converter.CanboConverter;
 import com.example.demo.dto.CanboDTO;
-import com.example.demo.entity.Canbo;
-import com.example.demo.entity.Chucvu;
-import com.example.demo.entity.Dantoc;
-import com.example.demo.entity.Tongiao;
+import com.example.demo.entity.*;
 import com.example.demo.repository.*;
 import com.example.demo.service.CanboService;
 import com.example.demo.service.DonvichucnangService;
 import com.example.demo.service.NgachcongchucService;
 import lombok.AllArgsConstructor;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,15 +74,38 @@ public class CanboServiceImpl implements CanboService {
 
     @Override
     public CanboDTO save(CanboDTO canboDTO) {
+        Canbo canboEntity = new Canbo();
+
+        // Nếu là tạo mới
         if (canboDTO.getId() == null) {
             canboDTO.setEnabled(true);
+            canboDTO.setNgayTuyenDung(new Date()); // Ngày tuyển dụng là ngày hiện tại
         }
 
+        // Ánh xạ các trường cơ bản
+        canboEntity.setTen(canboDTO.getTen());
+        canboEntity.setChucDanh(canboDTO.getChucDanh());
 
-        Canbo canboEntity = canboConverter.toEntity(canboDTO);
-        Canbo savedCanbo = canBoRepository.save(canboEntity);
+        // Ánh xạ Bacluong từ DTO
+        if (canboDTO.getBacluongDTO() != null && canboDTO.getBacluongDTO().getId() != null) {
+            Bacluong bacluong = bacLuongRepository.findById(canboDTO.getBacluongDTO().getId())
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy bậc lương với ID: " + canboDTO.getBacluongDTO().getId()));
+            canboEntity.setBacluong(bacluong); // Gán đối tượng bậc lương
+        }
+
+        // Chuyển đổi từ DTO sang Entity nhưng bỏ qua Bacluong
+        Canbo tempCanboEntity = canboConverter.toEntity(canboDTO);
+        tempCanboEntity.setBacluong(canboEntity.getBacluong()); // Giữ nguyên Bacluong đã được gán
+
+        // Lưu vào cơ sở dữ liệu
+        Canbo savedCanbo = canBoRepository.save(tempCanboEntity);
+
+        // Chuyển từ Entity đã lưu thành DTO
         return canboConverter.toDTO(savedCanbo);
     }
+
+
+
 
 
     // ton giao
@@ -230,5 +257,39 @@ public class CanboServiceImpl implements CanboService {
         canBoRepository.save(existingCanbo); // Lưu thay đổi
     }
 
+
+
+
+    @Override
+    public byte[] exportSalaryExcel(Long canboId) throws IOException {
+        try {
+            Canbo canbo = canBoRepository.findById(canboId)
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + canboId));
+
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Salary Info");
+
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("Họ tên cán bộ");
+            headerRow.createCell(1).setCellValue("Chức danh");
+            headerRow.createCell(2).setCellValue("Hệ số lương");
+            headerRow.createCell(3).setCellValue("Phụ cấp vượt khung");
+
+            Row dataRow = sheet.createRow(1);
+            dataRow.createCell(0).setCellValue(canbo.getTen());
+            dataRow.createCell(1).setCellValue(canbo.getChucDanh());
+            dataRow.createCell(2).setCellValue(canbo.getBacluong() != null ? canbo.getBacluong().getHeSoLuong() : 0);
+            dataRow.createCell(3).setCellValue(canbo.getBacluong() != null ? canbo.getBacluong().getPhuCapVuotKhung() : 0);
+
+            try (ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+                workbook.write(outputStream);
+                return outputStream.toByteArray();
+            }
+        } catch (IOException e) {
+            throw new IOException("Lỗi trong quá trình tạo file Excel: " + e.getMessage(), e);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Lỗi khi tìm kiếm cán bộ hoặc xử lý dữ liệu: " + e.getMessage(), e);
+        }
+    }
 
 }

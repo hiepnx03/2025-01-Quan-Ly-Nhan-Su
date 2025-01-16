@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 @Service
 @AllArgsConstructor
 public class KekhaitaisanServiceImpl implements KekhaitaisanService {
@@ -22,5 +27,46 @@ public class KekhaitaisanServiceImpl implements KekhaitaisanService {
     public List<KekhaitaisanDTO> getAll() {
         List<Kekhaitaisan> kekhaitaisanList = kekhaitaisanRepository.findAll();
         return kekhaitaisanList.stream().map(kekhaitaisanConverter::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<KekhaitaisanDTO> getAllPage(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Kekhaitaisan> kekhaitaisanPage = kekhaitaisanRepository.findAll(pageable);
+        return kekhaitaisanPage.map(kekhaitaisanConverter::toDTO);
+    }
+
+    @Override
+    public KekhaitaisanDTO getById(Long id) {
+        Kekhaitaisan entity = kekhaitaisanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id));
+        return kekhaitaisanConverter.toDTO(entity);
+    }
+
+    @Override
+    public KekhaitaisanDTO create(KekhaitaisanDTO kekhaitaisanDTO) {
+        Kekhaitaisan entity = kekhaitaisanConverter.toEntity(kekhaitaisanDTO);
+        Kekhaitaisan savedEntity = kekhaitaisanRepository.save(entity);
+        return kekhaitaisanConverter.toDTO(savedEntity);
+    }
+
+    @Override
+    public KekhaitaisanDTO update(Long id, KekhaitaisanDTO kekhaitaisanDTO) {
+        Kekhaitaisan existingEntity = kekhaitaisanRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id));
+
+        existingEntity.setFileKeKhai(kekhaitaisanDTO.getFileKeKhai());
+        existingEntity.setNgayKeKhai(kekhaitaisanDTO.getNgayKeKhai());
+
+        Kekhaitaisan updatedEntity = kekhaitaisanRepository.save(existingEntity);
+        return kekhaitaisanConverter.toDTO(updatedEntity);
+    }
+
+    @Override
+    public void delete(Long id) {
+        if (!kekhaitaisanRepository.existsById(id)) {
+            throw new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id);
+        }
+        kekhaitaisanRepository.deleteById(id);
     }
 }

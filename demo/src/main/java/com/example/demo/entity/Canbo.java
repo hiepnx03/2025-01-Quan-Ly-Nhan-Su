@@ -105,6 +105,11 @@ public class Canbo implements Serializable {
 	private List<Quyetdinhkyluat> quyetdinhkyluats;
 
 
+	@OneToMany(mappedBy = "canbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hopdongcanbo> hopdongcanbos;
+
+	@OneToMany(mappedBy = "canbo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Hopdongcanbonganhan> hopdongcanbonganhans;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "don_vi_chuc_nang_id",nullable = true)

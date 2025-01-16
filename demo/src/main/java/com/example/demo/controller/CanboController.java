@@ -11,7 +11,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -173,5 +175,23 @@ public class CanboController {
     public ResponseEntity<ResponseObject> deleteDanToc(@PathVariable Long canboId) {
         CanboDTO updatedCanbo = canboService.deleteDanToc(canboId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ResponseObject("204", "Xóa dân tộc thành công", updatedCanbo));
+    }
+
+
+    @GetMapping("/export-salary/{id}")
+    public ResponseEntity<byte[]> exportSalaryExcel(@PathVariable Long id) {
+        try {
+            byte[] excelFile = canboService.exportSalaryExcel(id);
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=salary_info.xlsx");
+
+            return new ResponseEntity<>(excelFile, headers, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

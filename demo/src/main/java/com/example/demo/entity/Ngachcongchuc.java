@@ -7,6 +7,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -28,5 +29,5 @@ public class Ngachcongchuc implements Serializable {
 
 	@Fetch(FetchMode.SUBSELECT)
 	@OneToMany(mappedBy = "ngachcongchuc", cascade = CascadeType.ALL, orphanRemoval = true)
-	private Set<Bacluong> bacLuongs = new HashSet<>();
+	private List<Bacluong> bacLuongs ;
 }

@@ -33,6 +33,8 @@ public class Donvichucnang implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "donvichucnang", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Canbo> canBos = new ArrayList<>();
 
+    @OneToMany(mappedBy = "donvichucnang")
+    private List<Hopdongcanbo> hopdongcanbos = new ArrayList<>();
 
     @OneToMany(mappedBy = "donvichucnang",fetch = FetchType.LAZY)
     private List<Quyetdinhkyluat> quyetdinhkyluats = new ArrayList<>();

@@ -1,7 +1,9 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Ngachcongchuc;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -13,7 +15,9 @@ public class BacluongDTO implements Serializable {
 	private double heSoLuong;
 	private double phuCapVuotKhung;
 
-	private Ngachcongchuc ngachcongchuc;
+	//	N-1 bacluong - ngachcongchuc
+	private NgachcongchucDTO ngachcongchucDTO;
+
 
 
 }

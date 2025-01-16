@@ -31,15 +31,15 @@ public class Hopdongcanbo implements Serializable {
 	@Column(name = "VERSION", nullable = false)
 	private Integer version = 0;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "don_vi_chuc_nang_id",referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "don_vi_chuc_nang_id", referencedColumnName = "id")
 	private Donvichucnang donvichucnang;
 
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "can_bo_id", referencedColumnName = "id")
 	private Canbo canbo;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "loai_hop_dong_id",referencedColumnName = "id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "loai_hop_dong_id", referencedColumnName = "id")
 	private Loaihopdong loaihopdong;
 }

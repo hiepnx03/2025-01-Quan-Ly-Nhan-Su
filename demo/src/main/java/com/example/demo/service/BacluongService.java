@@ -7,6 +7,15 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface BacluongService {
-    public Page<BacluongDTO> getAllPage(int pageNo, int pageSize);
-    public List<BacluongDTO> getAll();
+    List<BacluongDTO> getAll();
+
+    Page<BacluongDTO> getAllPage(int pageNo, int pageSize);
+
+    BacluongDTO getById(Long id);
+
+    BacluongDTO create(BacluongDTO dto);
+
+    BacluongDTO update(Long id, BacluongDTO dto);
+
+    void delete(Long id);
 }

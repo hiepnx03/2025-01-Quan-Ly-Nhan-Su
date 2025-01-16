@@ -47,7 +47,7 @@ public class ChucvuServiceImpl implements ChucvuService {
     public ChucvuDTO getById(Long id) {
         // Tìm kiếm chức vụ theo ID
         Chucvu chucvu = chucvuRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
+                    .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
         return chucvuConverter.toDTO(chucvu);
     }
 

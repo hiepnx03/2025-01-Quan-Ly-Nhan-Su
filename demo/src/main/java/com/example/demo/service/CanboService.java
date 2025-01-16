@@ -5,6 +5,7 @@ import com.example.demo.dto.CanboDTO;
 import com.example.demo.entity.Canbo;
 import org.springframework.data.domain.Page;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CanboService {
@@ -30,4 +31,9 @@ public interface CanboService {
     public CanboDTO update(CanboDTO canboDTO , Long id);
 
     void deleteById(Long id);
+
+
+
+    byte[] exportSalaryExcel(Long canboId) throws IOException;
+
 }
