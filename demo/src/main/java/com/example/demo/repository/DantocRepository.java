@@ -13,4 +13,6 @@ public interface DantocRepository extends JpaRepository<Dantoc, Long> {
 
     @Query("select d from Dantoc d")
     Page<Dantoc> findAllPage(Pageable pageable);
+
+    Page<Dantoc> findByTenDanTocContainingIgnoreCase(String tenDanToc, Pageable pageable);
 }

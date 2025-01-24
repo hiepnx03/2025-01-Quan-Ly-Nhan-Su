@@ -7,6 +7,7 @@ import com.example.demo.dto.HopdongcanbonganhanDTO;
 import com.example.demo.entity.Hopdongcanbonganhan;
 import com.example.demo.repository.HopdongcanbonganhanRepository;
 import com.example.demo.service.HopdongcanbonganhanService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class HopdongcanbonganhanServiceImpl implements HopdongcanbonganhanServic
     @Override
     public HopdongcanbonganhanDTO getById(Long id) {
         Hopdongcanbonganhan entity = hopdongcanbonganhanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id));
         return hopdongcanbonganhanConverter.toDTO(entity);
     }
 
@@ -53,7 +54,7 @@ public class HopdongcanbonganhanServiceImpl implements HopdongcanbonganhanServic
     @Override
     public HopdongcanbonganhanDTO update(Long id, HopdongcanbonganhanDTO dto) {
         Hopdongcanbonganhan existingEntity = hopdongcanbonganhanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id));
 
         existingEntity.setMaHopDong(dto.getMaHopDong());
         existingEntity.setTenHopDong(dto.getTenHopDong());
@@ -68,7 +69,7 @@ public class HopdongcanbonganhanServiceImpl implements HopdongcanbonganhanServic
     @Override
     public void delete(Long id) {
         if (!hopdongcanbonganhanRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy hợp đồng ngắn hạn với ID: " + id);
         }
         hopdongcanbonganhanRepository.deleteById(id);
     }

@@ -8,6 +8,7 @@ import com.example.demo.entity.Quyetdinhkyluat;
 import com.example.demo.repository.CanboRepository;
 import com.example.demo.repository.QuyetdinhkyluatRepository;
 import com.example.demo.service.QuyetdinhkyluatService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,7 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
     @Override
     public QuyetdinhkyluatDTO getById(Long id) {
         Quyetdinhkyluat quyetdinhkyluat = quyetdinhkyluatRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định kỷ luật với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định kỷ luật với ID: " + id));
         return quyetdinhkyluatConverter.toDTO(quyetdinhkyluat);
     }
 
@@ -45,7 +46,7 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
 
         if (dto.getCanboDTO() != null) {
             Canbo canbo = canboRepository.findById(dto.getCanboDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
             quyetdinhkyluat.setCanbo(canbo);
         }
 
@@ -56,7 +57,7 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
     @Override
     public QuyetdinhkyluatDTO update(Long id, QuyetdinhkyluatDTO dto) {
         Quyetdinhkyluat existingQuyetdinhkyluat = quyetdinhkyluatRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định kỷ luật với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định kỷ luật với ID: " + id));
 
         existingQuyetdinhkyluat.setSoQuyetDinh(dto.getSoQuyetDinh());
         existingQuyetdinhkyluat.setTenQuyetDinh(dto.getTenQuyetDinh());
@@ -65,7 +66,7 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
 
         if (dto.getCanboDTO() != null) {
             Canbo canbo = canboRepository.findById(dto.getCanboDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
             existingQuyetdinhkyluat.setCanbo(canbo);
         } else {
             existingQuyetdinhkyluat.setCanbo(null);
@@ -78,7 +79,7 @@ public class QuyetdinhkyluatServiceImpl implements QuyetdinhkyluatService {
     @Override
     public void delete(Long id) {
         if (!quyetdinhkyluatRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy quyết định kỷ luật với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy quyết định kỷ luật với ID: " + id);
         }
         quyetdinhkyluatRepository.deleteById(id);
     }

@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.constants.PageableConstant;
-import com.example.demo.dto.ChucvuDTO;
 import com.example.demo.dto.DantocDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.DantocService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,6 +55,22 @@ public class DantocController{
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Chi tiết dân tộc", dantoc));
     }
 
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
+    public ResponseEntity<ResponseObject> searchDantoc(
+            @RequestParam String tenDanToc,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<DantocDTO> results = dantocService.searchByTenDanToc(tenDanToc, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách dân tộc tìm kiếm", results.getContent()));
+    }
     @PostMapping
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Created",

@@ -5,6 +5,7 @@ import com.example.demo.dto.LoaihopdongDTO;
 import com.example.demo.entity.Loaihopdong;
 import com.example.demo.repository.LoaihopdongRepository;
 import com.example.demo.service.LoaihopdongService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class LoaihopdongServiceImpl implements LoaihopdongService {
     @Override
     public LoaihopdongDTO getById(Long id) {
         Loaihopdong loaihopdong = loaihopdongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Loai hợp đồng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy Loai hợp đồng với ID: " + id));
         return loaihopdongConverter.toDTO(loaihopdong);
     }
 
@@ -53,7 +54,7 @@ public class LoaihopdongServiceImpl implements LoaihopdongService {
     @Override
     public LoaihopdongDTO update(Long id, LoaihopdongDTO loaihopdongDTO) {
         Loaihopdong existingLoaihopdong = loaihopdongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Loại hợp đồng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy Loại hợp đồng với ID: " + id));
 
         // Cập nhật các trường cần thiết
         existingLoaihopdong.setTenLoaiHopDong(loaihopdongDTO.getTenLoaiHopDong());
@@ -65,8 +66,16 @@ public class LoaihopdongServiceImpl implements LoaihopdongService {
     @Override
     public void delete(Long id) {
         if (!loaihopdongRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy Chức vụ với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy Chức vụ với ID: " + id);
         }
         loaihopdongRepository.deleteById(id);
     }
+
+    @Override
+    public Page<LoaihopdongDTO> searchByTenLoaiHopDong(String tenLoaiHopDong, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Loaihopdong> loaihopdongPage = loaihopdongRepository.findByTenLoaiHopDongContainingIgnoreCase(tenLoaiHopDong, pageable);
+        return loaihopdongPage.map(loaihopdongConverter::toDTO);
+    }
+
 }

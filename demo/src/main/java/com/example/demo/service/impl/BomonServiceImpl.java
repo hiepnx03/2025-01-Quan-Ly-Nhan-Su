@@ -11,6 +11,7 @@ import com.example.demo.entity.Quequan;
 import com.example.demo.repository.BomonRepository;
 import com.example.demo.repository.DonvichucnangRepository;
 import com.example.demo.service.BomonService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,14 +47,14 @@ public class BomonServiceImpl implements BomonService {
     @Override
     public BomonDTO getById(Long id) {
         Bomon bomon = bomonRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy bộ môn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bộ môn với ID: " + id));
         return bomonConverter.toDTO(bomon);
     }
 
     @Override
     public BomonDTO create(Long donvichucnangId, BomonDTO bomonDTO) {
         Donvichucnang donvichucnang = donvichucnangRepository.findById(donvichucnangId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + donvichucnangId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + donvichucnangId));
 
         Bomon bomon = bomonConverter.toEntity(bomonDTO);
         bomon.setDonvichucnang(donvichucnang); // Gán đơn vị chức năng
@@ -65,9 +66,9 @@ public class BomonServiceImpl implements BomonService {
     @Override
     public BomonDTO update(Long donvichucnangId, Long bomonId, BomonDTO bomonDTO) {
         Donvichucnang donvichucnang = donvichucnangRepository.findById(donvichucnangId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + donvichucnangId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + donvichucnangId));
         Bomon existingBomon = bomonRepository.findById(bomonId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy bộ môn với ID: " + bomonId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bộ môn với ID: " + bomonId));
         existingBomon.setTenBoMon(bomonDTO.getTenBoMon());
         existingBomon.setDonvichucnang(donvichucnang); // Cập nhật lại đơn vị chức năng (nếu cần)
 
@@ -79,11 +80,17 @@ public class BomonServiceImpl implements BomonService {
     @Override
     public void delete(Long id) {
         if (!bomonRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy bộ môn với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy bộ môn với ID: " + id);
         }
         bomonRepository.deleteById(id);
     }
 
+    @Override
+    public Page<BomonDTO> searchByTenBoMon(String tenBoMon, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Bomon> bomonPage = bomonRepository.findByTenBoMonContainingIgnoreCase(tenBoMon, pageable);
+        return bomonPage.map(bomonConverter::toDTO);
+    }
 
 
 }

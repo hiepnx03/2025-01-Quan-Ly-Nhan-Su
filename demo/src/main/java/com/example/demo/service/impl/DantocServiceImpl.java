@@ -6,6 +6,7 @@ import com.example.demo.dto.DantocDTO;
 import com.example.demo.entity.Dantoc;
 import com.example.demo.repository.DantocRepository;
 import com.example.demo.service.DantocService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,7 +43,7 @@ public class DantocServiceImpl implements DantocService {
     public DantocDTO getById(Long id) {
         // Tìm dân tộc theo ID
         Dantoc dantoc = dantocRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy dân tộc với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy dân tộc với ID: " + id));
         return dantocConverter.toDTO(dantoc);
     }
 
@@ -58,7 +59,7 @@ public class DantocServiceImpl implements DantocService {
     public DantocDTO update(Long id, DantocDTO dantocDTO) {
         // Tìm dân tộc theo ID
         Dantoc existingDantoc = dantocRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy dân tộc với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy dân tộc với ID: " + id));
 
         // Cập nhật các thuộc tính
         existingDantoc.setTenDanToc(dantocDTO.getTenDanToc());
@@ -72,8 +73,17 @@ public class DantocServiceImpl implements DantocService {
     public void delete(Long id) {
         // Xóa dân tộc theo ID
         if (!dantocRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy dân tộc với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy dân tộc với ID: " + id);
         }
         dantocRepository.deleteById(id);
     }
+
+
+    @Override
+    public Page<DantocDTO> searchByTenDanToc(String tenDanToc, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Dantoc> dantocPage = dantocRepository.findByTenDanTocContainingIgnoreCase(tenDanToc, pageable);
+        return dantocPage.map(dantocConverter::toDTO);
+    }
+
 }

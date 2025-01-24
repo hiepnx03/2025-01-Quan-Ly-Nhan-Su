@@ -8,6 +8,7 @@ import com.example.demo.entity.Canbo;
 import com.example.demo.entity.Donvichucnang;
 import com.example.demo.repository.DonvichucnangRepository;
 import com.example.demo.service.DonvichucnangService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +42,7 @@ public class DonvichucnangServiceImpl implements DonvichucnangService {
     @Override
     public DonvichucnangDTO getById(Long id) {
         Donvichucnang donvichucnang = donvichucnangRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + id));
         return donvichucnangConverter.toDTO(donvichucnang);
     }
 
@@ -55,7 +56,7 @@ public class DonvichucnangServiceImpl implements DonvichucnangService {
     @Override
     public DonvichucnangDTO update(Long id, DonvichucnangDTO dto) {
         Donvichucnang existingDonvichucnang = donvichucnangRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + id));
 
         existingDonvichucnang.setMaDonVi(dto.getMaDonVi());
         existingDonvichucnang.setTenDonVi(dto.getTenDonVi());
@@ -68,8 +69,17 @@ public class DonvichucnangServiceImpl implements DonvichucnangService {
     @Override
     public void delete(Long id) {
         if (!donvichucnangRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + id);
         }
         donvichucnangRepository.deleteById(id);
     }
+
+
+    @Override
+    public Page<DonvichucnangDTO> searchByTenOrMaDonVi(String keyword, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Donvichucnang> donvichucnangPage = donvichucnangRepository.findByTenDonViContainingIgnoreCaseOrMaDonViContainingIgnoreCase(keyword, keyword, pageable);
+        return donvichucnangPage.map(donvichucnangConverter::toDTO);
+    }
+
 }

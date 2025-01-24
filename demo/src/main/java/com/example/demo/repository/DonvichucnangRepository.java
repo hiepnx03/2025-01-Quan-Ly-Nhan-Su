@@ -13,4 +13,8 @@ public interface DonvichucnangRepository extends JpaRepository<Donvichucnang, Lo
 
     @Query("select d from Donvichucnang d")
     Page<Donvichucnang> getAllPage(Pageable pageable);
+
+
+    Page<Donvichucnang> findByTenDonViContainingIgnoreCaseOrMaDonViContainingIgnoreCase(String tenDonVi, String maDonVi, Pageable pageable);
+
 }

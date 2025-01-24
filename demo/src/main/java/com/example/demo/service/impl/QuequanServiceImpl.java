@@ -9,6 +9,7 @@ import com.example.demo.entity.Quequan;
 import com.example.demo.repository.CanboRepository;
 import com.example.demo.repository.QuequanRepository;
 import com.example.demo.service.QuequanService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +35,7 @@ public class QuequanServiceImpl implements QuequanService {
     public List<QuequanDTO> getAllByCanboId(Long canboId) {
         // Kiểm tra nếu Canbo tồn tại
         Canbo canbo = canboRepository.findById(canboId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với id: " + canboId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với id: " + canboId));
 
         // Lấy danh sách Quequan và chuyển sang DTO
         List<Quequan> quequans = quequanRepository.findByCanboId(canboId);
@@ -47,7 +48,7 @@ public class QuequanServiceImpl implements QuequanService {
     @Override
     public QuequanDTO create(Long canboId, QuequanDTO quequanDTO) {
         Canbo canbo = canboRepository.findById(canboId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + canboId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + canboId));
 
         Quequan quequan = quequanConverter.toEntity(quequanDTO);
         quequan.setCanbo(canbo);
@@ -60,11 +61,11 @@ public class QuequanServiceImpl implements QuequanService {
     public QuequanDTO update(Long canboId, Long quequanId, QuequanDTO quequanDTO) {
         // Kiểm tra nếu Canbo tồn tại
         Canbo canbo = canboRepository.findById(canboId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với id: " + canboId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với id: " + canboId));
 
         // Lấy Quequan hiện tại
         Quequan existingQuequan = quequanRepository.findByIdAndCanboId(quequanId, canboId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quê quán với id: " + quequanId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quê quán với id: " + quequanId));
 
         // Cập nhật các trường từ DTO
         existingQuequan.setTenQueQuan(quequanDTO.getTenQueQuan()); // Ví dụ về cập nhật địa chỉ
@@ -81,7 +82,7 @@ public class QuequanServiceImpl implements QuequanService {
     public void delete(Long canboId, Long quequanId) {
         // Kiểm tra nếu Quequan tồn tại với Canbo
         Quequan quequan = quequanRepository.findByIdAndCanboId(quequanId, canboId)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quê quán với id: " + quequanId));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quê quán với id: " + quequanId));
 
         // Xóa Quequan
         quequanRepository.delete(quequan);

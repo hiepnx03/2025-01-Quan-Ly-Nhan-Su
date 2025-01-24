@@ -12,4 +12,7 @@ public interface BomonRepository extends JpaRepository<Bomon, Long> {
 
     @Query("SELECT b FROM Bomon b")
     Page<Bomon> getAllPage (Pageable pageable);
+
+    Page<Bomon> findByTenBoMonContainingIgnoreCase(String tenBoMon, Pageable pageable);
+
 }

@@ -2,10 +2,9 @@ package com.example.demo.controller.admin;
 
 import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.BomonDTO;
-import com.example.demo.dto.CanboDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.BomonService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,6 +42,23 @@ public class BomonController {
     ) {
         Page<BomonDTO> bomonDTOPage = bomonService.getAllPage(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(bomonDTOPage);
+    }
+
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
+    public ResponseEntity<ResponseObject> searchBoMon(
+            @RequestParam String tenBoMon,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<BomonDTO> results = bomonService.searchByTenBoMon(tenBoMon, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách bộ môn tìm kiếm", results.getContent()));
     }
 
     @GetMapping("/{id}")

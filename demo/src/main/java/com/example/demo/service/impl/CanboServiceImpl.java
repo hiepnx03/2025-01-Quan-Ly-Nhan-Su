@@ -8,6 +8,7 @@ import com.example.demo.repository.*;
 import com.example.demo.service.CanboService;
 import com.example.demo.service.DonvichucnangService;
 import com.example.demo.service.NgachcongchucService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -69,7 +70,7 @@ public class CanboServiceImpl implements CanboService {
     @Override
     public CanboDTO getById(Long id) {
         Optional<Canbo> canbo = canBoRepository.findById(id);
-        return canbo.map(canboConverter::toDTO).orElseThrow(() -> new RuntimeException("Cán bộ không tồn tại với id: " + id));
+        return canbo.map(canboConverter::toDTO).orElseThrow(() -> new EntityNotFoundException("Cán bộ không tồn tại với id: " + id));
     }
 
     @Override
@@ -89,7 +90,7 @@ public class CanboServiceImpl implements CanboService {
         // Ánh xạ Bacluong từ DTO
         if (canboDTO.getBacluongDTO() != null && canboDTO.getBacluongDTO().getId() != null) {
             Bacluong bacluong = bacLuongRepository.findById(canboDTO.getBacluongDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy bậc lương với ID: " + canboDTO.getBacluongDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bậc lương với ID: " + canboDTO.getBacluongDTO().getId()));
             canboEntity.setBacluong(bacluong); // Gán đối tượng bậc lương
         }
 
@@ -258,6 +259,68 @@ public class CanboServiceImpl implements CanboService {
     }
 
 
+    @Override
+    public Page<CanboDTO> getByGioiTinh(String gioiTinh, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByGioiTinhContainingIgnoreCase(gioiTinh, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByDanToc(Long danTocId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByDantocId(danTocId, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByTonGiao(Long tonGiaoId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByTongiaoId(tonGiaoId, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByChucVu(Long chucVuId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByChucvuId(chucVuId, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByChucDanh(String chucDanh, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByChucDanhContainingIgnoreCase(chucDanh, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByDonViBoMon(Long donViBoMonId, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByBomonId(donViBoMonId, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByQueQuan(String queQuan, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByQuequansContainingIgnoreCase(queQuan, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByNgachCongChuc(String ngachCongChuc, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByNgachcongchucContainingIgnoreCase(ngachCongChuc, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
+
+    @Override
+    public Page<CanboDTO> getByDonViChucNang(String donViChucNang, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Canbo> canboPage = canBoRepository.findByDonvichucnangContainingIgnoreCase(donViChucNang, pageable);
+        return canboPage.map(canboConverter::toDTO);
+    }
 
 
     @Override

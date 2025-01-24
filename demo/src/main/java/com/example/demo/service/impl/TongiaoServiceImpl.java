@@ -6,6 +6,7 @@ import com.example.demo.dto.TongiaoDTO;
 import com.example.demo.entity.Tongiao;
 import com.example.demo.repository.TongiaoRepository;
 import com.example.demo.service.TongiaoService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class TongiaoServiceImpl implements TongiaoService {
     @Override
     public TongiaoDTO getById(Long id) {
         Tongiao tongiao = tongiaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy tôn giáo với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy tôn giáo với ID: " + id));
         return tongiaoConverter.toDTO(tongiao);
     }
 
@@ -53,7 +54,7 @@ public class TongiaoServiceImpl implements TongiaoService {
     @Override
     public TongiaoDTO update(Long id, TongiaoDTO dto) {
         Tongiao existingTongiao = tongiaoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy tôn giáo với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy tôn giáo với ID: " + id));
         existingTongiao.setTenTonGiao(dto.getTenTonGiao());
         existingTongiao.setVersion(dto.getVersion());
         Tongiao updatedTongiao = tongiaoRepository.save(existingTongiao);
@@ -63,10 +64,18 @@ public class TongiaoServiceImpl implements TongiaoService {
     @Override
     public void delete(Long id) {
         if (!tongiaoRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy tôn giáo với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy tôn giáo với ID: " + id);
         }
         tongiaoRepository.deleteById(id);
     }
+
+    @Override
+    public Page<TongiaoDTO> searchByTenTonGiao(String tenTonGiao, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Tongiao> tongiaoPage = tongiaoRepository.findByTenTonGiaoContainingIgnoreCase(tenTonGiao, pageable);
+        return tongiaoPage.map(tongiaoConverter::toDTO);
+    }
+
 
 
 }

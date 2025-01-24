@@ -14,4 +14,7 @@ public interface LoaiquyetdinhService {
     LoaiquyetdinhDTO update(Long id, LoaiquyetdinhDTO dto); // Cập nhật loại quyết định
 
     void delete(Long id);
+
+    Page<LoaiquyetdinhDTO> searchByTenLoaiQuyetDinh(String tenLoaiQuyetDinh, int pageNo, int pageSize);
+
 }

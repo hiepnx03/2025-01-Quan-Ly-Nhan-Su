@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.constants.PageableConstant;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,6 +56,24 @@ public class ChucvuController {
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         ChucvuDTO result = chucvuService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Chi tiết chức vụ", result));
+    }
+
+    // 🔍 API tìm kiếm chức vụ (có hỗ trợ phân trang)
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
+    public ResponseEntity<ResponseObject> searchChucVu(
+            @RequestParam String tenChucVu,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<ChucvuDTO> results = chucvuService.searchByTenChucVu(tenChucVu, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách chức vụ tìm kiếm", results.getContent()));
     }
 
     @PostMapping

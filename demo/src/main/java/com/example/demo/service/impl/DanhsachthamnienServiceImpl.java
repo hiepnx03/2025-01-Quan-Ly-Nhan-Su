@@ -6,6 +6,7 @@ import com.example.demo.dto.DanhsachthamnienDTO;
 import com.example.demo.entity.Danhsachthamnien;
 import com.example.demo.repository.DanhsachthamnienRepository;
 import com.example.demo.service.DanhsachthamnienService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class DanhsachthamnienServiceImpl implements DanhsachthamnienService {
     @Override
     public DanhsachthamnienDTO getById(Long id) {
         Danhsachthamnien entity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách thâm niên với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách thâm niên với ID: " + id));
         return converter.toDTO(entity);
     }
 
@@ -63,7 +64,7 @@ public class DanhsachthamnienServiceImpl implements DanhsachthamnienService {
     @Override
     public DanhsachthamnienDTO update(Long id, DanhsachthamnienDTO danhsachthamnienDTO) {
         Danhsachthamnien existingEntity = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách thâm niên với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách thâm niên với ID: " + id));
 
         existingEntity.setSoThangBiGiamTru(danhsachthamnienDTO.getSoThangBiGiamTru());
         existingEntity.setGhiChuThoiDiemTang(danhsachthamnienDTO.getGhiChuThoiDiemTang());
@@ -84,7 +85,7 @@ public class DanhsachthamnienServiceImpl implements DanhsachthamnienService {
     @Override
     public void delete(Long id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy danh sách thâm niên với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy danh sách thâm niên với ID: " + id);
         }
         repository.deleteById(id);
     }

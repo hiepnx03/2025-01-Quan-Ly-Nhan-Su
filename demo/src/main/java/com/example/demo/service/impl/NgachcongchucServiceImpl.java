@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 
 import com.example.demo.service.NgachcongchucService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.converter.NgachcongchucConverter;
@@ -39,7 +40,7 @@ public class NgachcongchucServiceImpl implements NgachcongchucService {
     @Override
     public NgachcongchucDTO getById(Long id) {
         Ngachcongchuc entity = ngachcongchucRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy ngạch công chức với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy ngạch công chức với ID: " + id));
         return ngachcongchucConverter.toDTO(entity);
     }
 
@@ -53,7 +54,7 @@ public class NgachcongchucServiceImpl implements NgachcongchucService {
     @Override
     public NgachcongchucDTO update(Long id, NgachcongchucDTO dto) {
         Ngachcongchuc existingEntity = ngachcongchucRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy ngạch công chức với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy ngạch công chức với ID: " + id));
 
         existingEntity.setMaNgach(dto.getMaNgach());
         existingEntity.setTenNgach(dto.getTenNgach());
@@ -66,8 +67,17 @@ public class NgachcongchucServiceImpl implements NgachcongchucService {
     @Override
     public void delete(Long id) {
         if (!ngachcongchucRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy ngạch công chức với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy ngạch công chức với ID: " + id);
         }
         ngachcongchucRepository.deleteById(id);
     }
+
+
+    @Override
+    public Page<NgachcongchucDTO> searchByMaNgachOrSoNamNangBacLuongOrTenNgach(String keyword, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Ngachcongchuc> ngachcongchucPage = ngachcongchucRepository.findByMaNgachContainingIgnoreCaseOrSoNamNangBacLuongContainingIgnoreCaseOrTenNgachContainingIgnoreCase(keyword, keyword, keyword, pageable);
+        return ngachcongchucPage.map(ngachcongchucConverter::toDTO);
+    }
+
 }

@@ -18,4 +18,7 @@ public interface NgachcongchucService {
     NgachcongchucDTO update(Long id, NgachcongchucDTO dto);
 
     void delete(Long id);
+
+    Page<NgachcongchucDTO> searchByMaNgachOrSoNamNangBacLuongOrTenNgach(String keyword, int pageNo, int pageSize);
+
 }

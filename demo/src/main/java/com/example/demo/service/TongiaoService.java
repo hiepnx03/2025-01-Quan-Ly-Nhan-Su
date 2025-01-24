@@ -16,4 +16,6 @@ public interface TongiaoService {
     TongiaoDTO update(Long id, TongiaoDTO dto); // Cập nhật tôn giáo
     void delete(Long id);                       // Xóa tôn giáo
 
+
+    Page<TongiaoDTO> searchByTenTonGiao(String tenTonGiao,int pageNo, int pageSize);
 }

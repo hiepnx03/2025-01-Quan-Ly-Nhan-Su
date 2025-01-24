@@ -8,7 +8,7 @@ import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtils;
 import com.example.demo.utils.TokenBlacklist;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

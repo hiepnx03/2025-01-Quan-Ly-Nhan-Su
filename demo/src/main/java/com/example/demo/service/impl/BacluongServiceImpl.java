@@ -6,6 +6,7 @@ import com.example.demo.dto.BacluongDTO;
 import com.example.demo.entity.Bacluong;
 import com.example.demo.repository.BacluongRepository;
 import com.example.demo.service.BacluongService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,7 +39,7 @@ public class BacluongServiceImpl implements BacluongService {
     @Override
     public BacluongDTO getById(Long id) {
         Bacluong entity = bacluongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy bậc lương với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bậc lương với ID: " + id));
         return bacluongConverter.toDTO(entity);
     }
 
@@ -52,7 +53,7 @@ public class BacluongServiceImpl implements BacluongService {
     @Override
     public BacluongDTO update(Long id, BacluongDTO dto) {
         Bacluong existingEntity = bacluongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy bậc lương với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bậc lương với ID: " + id));
 
         existingEntity.setMaBacLuong(dto.getMaBacLuong());
         existingEntity.setHeSoLuong(dto.getHeSoLuong());
@@ -65,7 +66,7 @@ public class BacluongServiceImpl implements BacluongService {
     @Override
     public void delete(Long id) {
         if (!bacluongRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy bậc lương với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy bậc lương với ID: " + id);
         }
         bacluongRepository.deleteById(id);
     }

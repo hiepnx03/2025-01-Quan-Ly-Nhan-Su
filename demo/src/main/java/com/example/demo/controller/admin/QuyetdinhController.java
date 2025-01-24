@@ -1,10 +1,8 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.constants.PageableConstant;
-import com.example.demo.dto.LoaiquyetdinhDTO;
-import com.example.demo.dto.QuyetdinhkyluatDTO;
 import com.example.demo.dto.response.ResponseObject;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

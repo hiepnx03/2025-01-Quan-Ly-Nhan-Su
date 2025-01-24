@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +8,7 @@ import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.DanhsachkhoangonDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.DanhsachkhoangonService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

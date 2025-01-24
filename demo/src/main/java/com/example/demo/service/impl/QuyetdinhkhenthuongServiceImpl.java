@@ -2,6 +2,7 @@ package com.example.demo.service.impl;
 
 
 import com.example.demo.service.QuyetdinhkhenthuongService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class QuyetdinhkhenthuongServiceImpl implements QuyetdinhkhenthuongServic
     @Override
     public QuyetdinhkhenthuongDTO getById(Long id) {
         Quyetdinhkhenthuong entity = quyetdinhkhenthuongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định khen thưởng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định khen thưởng với ID: " + id));
         return quyetdinhkhenthuongConverter.toDTO(entity);
     }
 
@@ -55,7 +56,7 @@ public class QuyetdinhkhenthuongServiceImpl implements QuyetdinhkhenthuongServic
     @Override
     public QuyetdinhkhenthuongDTO update(Long id, QuyetdinhkhenthuongDTO dto) {
         Quyetdinhkhenthuong existingEntity = quyetdinhkhenthuongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định khen thưởng với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định khen thưởng với ID: " + id));
 
         existingEntity.setSoQuyetDinh(dto.getSoQuyetDinh());
         existingEntity.setTenQuyetDinh(dto.getTenQuyetDinh());
@@ -71,7 +72,7 @@ public class QuyetdinhkhenthuongServiceImpl implements QuyetdinhkhenthuongServic
     @Override
     public void delete(Long id) {
         if (!quyetdinhkhenthuongRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy quyết định khen thưởng với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy quyết định khen thưởng với ID: " + id);
         }
         quyetdinhkhenthuongRepository.deleteById(id);
     }

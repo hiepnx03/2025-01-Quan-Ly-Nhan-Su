@@ -12,6 +12,7 @@ import com.example.demo.repository.DonvichucnangRepository;
 import com.example.demo.repository.LoaiquyetdinhRepository;
 import com.example.demo.repository.QuyetdinhRepository;
 import com.example.demo.service.QuyetdinhService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -48,7 +49,7 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
     @Override
     public QuyetdinhDTO getById(Long id) {
         Quyetdinh quyetdinh = quyetdinhRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định với ID: " + id));
         return quyetdinhConverter.toDTO(quyetdinh);
     }
 
@@ -58,19 +59,19 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
 
         if (dto.getCanboDTO() != null) {
             Canbo canbo = canboRepository.findById(dto.getCanboDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
             quyetdinh.setCanbo(canbo);
         }
 
         if (dto.getDonvichucnangDTO() != null) {
             Donvichucnang donvichucnang = donvichucnangRepository.findById(dto.getDonvichucnangDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + dto.getDonvichucnangDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + dto.getDonvichucnangDTO().getId()));
             quyetdinh.setDonvichucnang(donvichucnang);
         }
 
         if (dto.getLoaiquyetdinhDTO() != null) {
             Loaiquyetdinh loaiquyetdinh = loaiquyetdinhRepository.findById(dto.getLoaiquyetdinhDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy loại quyết định với ID: " + dto.getLoaiquyetdinhDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại quyết định với ID: " + dto.getLoaiquyetdinhDTO().getId()));
             quyetdinh.setLoaiquyetdinh(loaiquyetdinh);
         }
 
@@ -81,7 +82,7 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
     @Override
     public QuyetdinhDTO update(Long id, QuyetdinhDTO dto) {
         Quyetdinh existingQuyetdinh = quyetdinhRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quyết định với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quyết định với ID: " + id));
 
         existingQuyetdinh.setSoQuyetDinh(dto.getSoQuyetDinh());
         existingQuyetdinh.setTenQuyetDinh(dto.getTenQuyetDinh());
@@ -94,19 +95,19 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
 
         if (dto.getCanboDTO() != null) {
             Canbo canbo = canboRepository.findById(dto.getCanboDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
             existingQuyetdinh.setCanbo(canbo);
         }
 
         if (dto.getDonvichucnangDTO() != null) {
             Donvichucnang donvichucnang = donvichucnangRepository.findById(dto.getDonvichucnangDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn vị chức năng với ID: " + dto.getDonvichucnangDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy đơn vị chức năng với ID: " + dto.getDonvichucnangDTO().getId()));
             existingQuyetdinh.setDonvichucnang(donvichucnang);
         }
 
         if (dto.getLoaiquyetdinhDTO() != null) {
             Loaiquyetdinh loaiquyetdinh = loaiquyetdinhRepository.findById(dto.getLoaiquyetdinhDTO().getId())
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy loại quyết định với ID: " + dto.getLoaiquyetdinhDTO().getId()));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại quyết định với ID: " + dto.getLoaiquyetdinhDTO().getId()));
             existingQuyetdinh.setLoaiquyetdinh(loaiquyetdinh);
         }
 
@@ -117,7 +118,7 @@ public class QuyetdinhServiceImpl implements QuyetdinhService {
     @Override
     public void delete(Long id) {
         if (!quyetdinhRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy quyết định với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy quyết định với ID: " + id);
         }
         quyetdinhRepository.deleteById(id);
     }

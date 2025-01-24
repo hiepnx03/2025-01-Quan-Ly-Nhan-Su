@@ -1,11 +1,10 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.constants.PageableConstant;
-import com.example.demo.dto.BomonDTO;
 import com.example.demo.dto.DonvichucnangDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.DonvichucnangService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -54,6 +53,23 @@ public class DonvichucnangController {
     public ResponseEntity<ResponseObject> getById(@PathVariable Long id) {
         DonvichucnangDTO donvichucnang = donvichucnangService.getById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("200", "Chi tiết đơn vị chức năng", donvichucnang));
+    }
+
+    // 🔍 API tìm kiếm đơn vị chức năng (có hỗ trợ phân trang)
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
+    public ResponseEntity<ResponseObject> searchDonVi(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        Page<DonvichucnangDTO> results = donvichucnangService.searchByTenOrMaDonVi(keyword, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách đơn vị chức năng tìm kiếm", results.getContent()));
     }
 
     @PostMapping

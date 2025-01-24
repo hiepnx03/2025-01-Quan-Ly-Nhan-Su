@@ -5,6 +5,7 @@ import com.example.demo.dto.HopdongcanboDTO;
 import com.example.demo.entity.Hopdongcanbo;
 import com.example.demo.repository.HopdongcanboRepository;
 import com.example.demo.service.HopdongcanboService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +40,7 @@ public class HopdongcanboServiceImpl implements HopdongcanboService {
     @Override
     public HopdongcanboDTO getById(Long id) {
         Hopdongcanbo hopdongcanbo = hopdongcanboRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy hợp đồng cán bộ với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hợp đồng cán bộ với ID: " + id));
         return hopdongcanboConverter.toDTO(hopdongcanbo);
     }
 
@@ -53,7 +54,7 @@ public class HopdongcanboServiceImpl implements HopdongcanboService {
     @Override
     public HopdongcanboDTO update(Long id, HopdongcanboDTO hopdongcanboDTO) {
         Hopdongcanbo existingHopdongcanbo = hopdongcanboRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy hợp đồng cán bộ với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hợp đồng cán bộ với ID: " + id));
 
         // Cập nhật các trường cần thiết
         existingHopdongcanbo.setMaHopDong(hopdongcanboDTO.getMaHopDong());
@@ -83,7 +84,7 @@ public class HopdongcanboServiceImpl implements HopdongcanboService {
     @Override
     public void delete(Long id) {
         if (!hopdongcanboRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy hợp đồng cán bộ với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy hợp đồng cán bộ với ID: " + id);
         }
         hopdongcanboRepository.deleteById(id);
     }

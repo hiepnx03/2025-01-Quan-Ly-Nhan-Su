@@ -2,9 +2,11 @@ package com.example.demo.service.impl;
 
 import com.example.demo.converter.LoaihopdongnganhanConverter;
 import com.example.demo.dto.LoaihopdongnganhanDTO;
+import com.example.demo.entity.Loaihopdong;
 import com.example.demo.entity.Loaihopdongnganhan;
 import com.example.demo.repository.LoaihopdongnganhanRepository;
 import com.example.demo.service.LoaihopdongnganhanService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,7 +39,7 @@ public class LoaihopdongnganhanServiceImpl implements LoaihopdongnganhanService 
     @Override
     public LoaihopdongnganhanDTO getById(Long id) {
         Loaihopdongnganhan entity = loaihopdongnganhanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id));
         return loaihopdongnganhanConverter.toDTO(entity);
     }
 
@@ -51,7 +53,7 @@ public class LoaihopdongnganhanServiceImpl implements LoaihopdongnganhanService 
     @Override
     public LoaihopdongnganhanDTO update(Long id, LoaihopdongnganhanDTO dto) {
         Loaihopdongnganhan existingEntity = loaihopdongnganhanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id));
 
         existingEntity.setTenLoaiHopDong(dto.getTenLoaiHopDong());
 
@@ -62,8 +64,18 @@ public class LoaihopdongnganhanServiceImpl implements LoaihopdongnganhanService 
     @Override
     public void delete(Long id) {
         if (!loaihopdongnganhanRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy loại hợp đồng ngắn hạn với ID: " + id);
         }
         loaihopdongnganhanRepository.deleteById(id);
     }
+
+    @Override
+    public Page<LoaihopdongnganhanDTO> searchByTenLoaiHopDong(String tenLoaiHopDong, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Loaihopdongnganhan> loaihopdongnganhanPage = loaihopdongnganhanRepository.findByTenLoaiHopDongContainingIgnoreCase(tenLoaiHopDong, pageable);
+        return loaihopdongnganhanPage.map(loaihopdongnganhanConverter::toDTO);
+    }
+
+
+
 }

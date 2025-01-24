@@ -6,6 +6,7 @@ import com.example.demo.dto.DanhsachkiemnhiemDTO;
 import com.example.demo.entity.Danhsachkiemnhiem;
 import com.example.demo.repository.DanhsachkiemnhiemRepository;
 import com.example.demo.service.DanhsachkiemnhiemService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class DanhsachkiemnhiemServiceImpl implements DanhsachkiemnhiemService {
     @Override
     public DanhsachkiemnhiemDTO getById(Long id) {
         Danhsachkiemnhiem entity = danhsachkiemnhiemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id));
         return danhsachkiemnhiemConverter.toDTO(entity);
     }
 
@@ -54,7 +55,7 @@ public class DanhsachkiemnhiemServiceImpl implements DanhsachkiemnhiemService {
     @Override
     public DanhsachkiemnhiemDTO update(Long id, DanhsachkiemnhiemDTO dto) {
         Danhsachkiemnhiem existingEntity = danhsachkiemnhiemRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id));
 
         existingEntity.setChucVuKiemNhiem(dto.getChucVuKiemNhiem());
         existingEntity.setTuNgay(dto.getTuNgay());
@@ -67,7 +68,7 @@ public class DanhsachkiemnhiemServiceImpl implements DanhsachkiemnhiemService {
     @Override
     public void delete(Long id) {
         if (!danhsachkiemnhiemRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy danh sách kiêm nhiệm với ID: " + id);
         }
         danhsachkiemnhiemRepository.deleteById(id);
     }

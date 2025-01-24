@@ -1,0 +1,5 @@
+1 dùng GlobalException nhưng Swagger bị lỗi (nên bỏ GlobalException)
+2 đổi các ServiceImpl RuntimeException thành EntityNotFoundException 
+3 thêm các service Tìm kiếm theo tên kèm phân trang 
+tìm kiếm của canbo đang bị lỗi khi tìm kiếm liên quan tới bảng khác
+4 file data.sql ở trong resources

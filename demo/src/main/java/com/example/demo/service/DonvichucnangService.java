@@ -13,4 +13,7 @@ public interface DonvichucnangService {
     DonvichucnangDTO create(DonvichucnangDTO dto);     // Tạo mới đơn vị chức năng
     DonvichucnangDTO update(Long id, DonvichucnangDTO dto); // Cập nhật đơn vị chức năng
     void delete(Long id);
+
+    Page<DonvichucnangDTO> searchByTenOrMaDonVi(String keyword, int pageNo, int pageSize);
+
 }

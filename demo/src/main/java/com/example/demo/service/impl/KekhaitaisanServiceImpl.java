@@ -5,6 +5,7 @@ import com.example.demo.dto.KekhaitaisanDTO;
 import com.example.demo.entity.Kekhaitaisan;
 import com.example.demo.repository.KekhaitaisanRepository;
 import com.example.demo.service.KekhaitaisanService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +40,7 @@ public class KekhaitaisanServiceImpl implements KekhaitaisanService {
     @Override
     public KekhaitaisanDTO getById(Long id) {
         Kekhaitaisan entity = kekhaitaisanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy kê khai tài sản với ID: " + id));
         return kekhaitaisanConverter.toDTO(entity);
     }
 
@@ -53,7 +54,7 @@ public class KekhaitaisanServiceImpl implements KekhaitaisanService {
     @Override
     public KekhaitaisanDTO update(Long id, KekhaitaisanDTO kekhaitaisanDTO) {
         Kekhaitaisan existingEntity = kekhaitaisanRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy kê khai tài sản với ID: " + id));
 
         existingEntity.setFileKeKhai(kekhaitaisanDTO.getFileKeKhai());
         existingEntity.setNgayKeKhai(kekhaitaisanDTO.getNgayKeKhai());
@@ -65,7 +66,7 @@ public class KekhaitaisanServiceImpl implements KekhaitaisanService {
     @Override
     public void delete(Long id) {
         if (!kekhaitaisanRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy kê khai tài sản với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy kê khai tài sản với ID: " + id);
         }
         kekhaitaisanRepository.deleteById(id);
     }

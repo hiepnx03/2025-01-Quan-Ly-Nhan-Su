@@ -8,10 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface ChucvuRepository extends JpaRepository<Chucvu, Long> {
 
     @Query("select c from Chucvu c")
     Page<Chucvu> getAllPageable(Pageable pageable);
+
+    Page<Chucvu> findByTenChucVuContainingIgnoreCase(String tenChucVu, Pageable pageable);
+
 }

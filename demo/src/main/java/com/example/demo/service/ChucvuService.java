@@ -14,4 +14,6 @@ public interface ChucvuService {
     ChucvuDTO create(ChucvuDTO chucvuDTO);
     ChucvuDTO update(Long id, ChucvuDTO chucvuDTO);
     void delete(Long id);
+    Page<ChucvuDTO> searchByTenChucVu(String tenChucVu, int pageNo, int pageSize);
+
 }

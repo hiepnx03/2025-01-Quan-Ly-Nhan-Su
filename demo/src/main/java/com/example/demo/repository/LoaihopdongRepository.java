@@ -13,4 +13,7 @@ public interface LoaihopdongRepository extends JpaRepository<Loaihopdong, Long> 
 
     @Query("select l from Loaihopdong l")
     Page<Loaihopdong> findAllPage(Pageable pageable);
+
+    Page<Loaihopdong> findByTenLoaiHopDongContainingIgnoreCase(String tenLoaiHopDong, Pageable pageable);
+
 }

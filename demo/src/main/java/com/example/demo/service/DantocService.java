@@ -14,4 +14,6 @@ public interface DantocService {
     DantocDTO update(Long id, DantocDTO dantocDTO); // Cập nhật tôn giáo
     void delete(Long id);                       // Xóa tôn giáo
 
+    Page<DantocDTO> searchByTenDanToc(String tenDanToc, int pageNo, int pageSize);
+
 }

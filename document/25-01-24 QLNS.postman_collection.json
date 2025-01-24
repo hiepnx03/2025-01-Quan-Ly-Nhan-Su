@@ -1,0 +1,2149 @@
+{
+	"info": {
+		"_postman_id": "a7dd11da-090d-4ee8-9aab-f24f7dd6671b",
+		"name": "QLNS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28689103"
+	},
+	"item": [
+		{
+			"name": "cán bộ",
+			"item": [
+				{
+					"name": "quequan",
+					"item": [
+						{
+							"name": "Lấy danh sách quê quán",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo quê quán mới",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/canbo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"canbo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo quê quán mới Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/canbo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"canbo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật quê quán",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"diaChi\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/canbo/1/quequan/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"canbo",
+										"1",
+										"quequan",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xoá quê quán",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"diaChi\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/canbo/1/quequan/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"canbo",
+										"1",
+										"quequan",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tìm Cán Bộ Bằng Quê Quán",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "tongiao",
+					"item": [
+						{
+							"name": "canbo-tongiao",
+							"item": [
+								{
+									"name": "updateTongiao cập nhật tôn giao cho cán bộ 1",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 1,\r\n    \"tongiaoDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/tongiao",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"tongiao"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addTongiao cập nhật tôn giao cho cán bộ 1 Copy",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "// Sửa số để gán",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/tongiao/2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"tongiao",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "xoá tôn giao cho cán bộ 1",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"soHieu\": \"CB001\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"hocVi\": \"Thạc sĩ\",\r\n    \"hocHam\": \"Phó giáo sư\",\r\n    \"lyLuanChinhTri\": \"Cao cấp\",\r\n    \"quanLyNhaNuoc\": \"Chuyên viên\",\r\n    \"ngoaiNgu\": \"Tiếng Anh\",\r\n    \"tinHoc\": \"Chứng chỉ B\",\r\n    \"thamGiaToChucCtxh\": \"Hội Chữ thập đỏ\",\r\n    \"nhomMau\": \"O\",\r\n    \"soBaoHiemXh\": \"012345678901\",\r\n    \"laThuongBinh\": \"Không\",\r\n    \"laConGiaDinhChinhSach\": \"Có\",\r\n    \"nhanXet\": \"Nhiệt tình, trách nhiệm\",\r\n    \"quanHamCaoNhat\": \"Đại tá\",\r\n    \"danhHieuPhongTang\": \"Chiến sĩ thi đua cấp Bộ\",\r\n    \"khenThuong\": \"Bằng khen Thủ tướng\",\r\n    \"kyLuat\": \"Không\",\r\n    \"tinhTrangSucKhoe\": \"Tốt\",\r\n    \"soTruongCongTac\": 5,\r\n    \"chieuCao\": 170,\r\n    \"canNang\": 65,\r\n    \"phuCapChucVu\": 0.5,\r\n    \"phuCaidhac\": 0.2,\r\n    \"version\": 1,\r\n    \"ngayNhapNgu\": \"2010-06-01\",\r\n    \"ngayXuatNgu\": \"2015-06-01\",\r\n    \"ngayVeHuu\": \"2030-01-01\",\r\n    \"ngayThoiViec\": \"2030-12-31\",\r\n    \"ngayNhanHocVi\": \"2020-01-01\",\r\n    \"ngayHuong\": \"2025-06-01\",\r\n    \"ngayTuyenDung\": \"2018-06-01\",\r\n    \"ngaySinh\": \"1985-01-01\",\r\n    \"ngayCapCmnd\": \"2000-01-01\",\r\n    \"ngayNhanHocHam\": \"2022-01-01\",\r\n    \"ngayVaoDcsvnDuBi\": \"2012-01-01\",\r\n    \"ngayVaoDcsvnChinhThuc\": \"2014-01-01\",\r\n    \"donvichucnangDTO\": null,\r\n    \"bomonDTO\": null,\r\n    \"quequanDTO\": null,\r\n    \"dantocDTO\": null,\r\n    \"tongiaoDTO\": null,\r\n    \"chucvuDTO\": null,\r\n    \"ngachcongchucDTO\": null,\r\n    \"bacluongDTO\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/tongiao",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"tongiao"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Lấy danh sách tôn giáo",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo tongiao",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"tenTonGiao\": \"Không\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/tongiao",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"tongiao"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật tongiao",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"diaChi\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/tongiao/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"tongiao",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xoá tongiao",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"diaChi\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/tongiao/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"tongiao",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "dantoc",
+					"item": [
+						{
+							"name": "canbo-dantoc",
+							"item": [
+								{
+									"name": "updatedantoc  cập nhật dantoc cho cán bộ 1",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 1,\r\n    \"dantocDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/dantoc",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"dantoc"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "adddantoc cập nhật dantoc cho cán bộ 1",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "// Sửa số để gán",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/dantoc/2",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"dantoc",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "xoá dantoc cho cán bộ 1",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"soHieu\": \"CB001\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"hocVi\": \"Thạc sĩ\",\r\n    \"hocHam\": \"Phó giáo sư\",\r\n    \"lyLuanChinhTri\": \"Cao cấp\",\r\n    \"quanLyNhaNuoc\": \"Chuyên viên\",\r\n    \"ngoaiNgu\": \"Tiếng Anh\",\r\n    \"tinHoc\": \"Chứng chỉ B\",\r\n    \"thamGiaToChucCtxh\": \"Hội Chữ thập đỏ\",\r\n    \"nhomMau\": \"O\",\r\n    \"soBaoHiemXh\": \"012345678901\",\r\n    \"laThuongBinh\": \"Không\",\r\n    \"laConGiaDinhChinhSach\": \"Có\",\r\n    \"nhanXet\": \"Nhiệt tình, trách nhiệm\",\r\n    \"quanHamCaoNhat\": \"Đại tá\",\r\n    \"danhHieuPhongTang\": \"Chiến sĩ thi đua cấp Bộ\",\r\n    \"khenThuong\": \"Bằng khen Thủ tướng\",\r\n    \"kyLuat\": \"Không\",\r\n    \"tinhTrangSucKhoe\": \"Tốt\",\r\n    \"soTruongCongTac\": 5,\r\n    \"chieuCao\": 170,\r\n    \"canNang\": 65,\r\n    \"phuCapChucVu\": 0.5,\r\n    \"phuCaidhac\": 0.2,\r\n    \"version\": 1,\r\n    \"ngayNhapNgu\": \"2010-06-01\",\r\n    \"ngayXuatNgu\": \"2015-06-01\",\r\n    \"ngayVeHuu\": \"2030-01-01\",\r\n    \"ngayThoiViec\": \"2030-12-31\",\r\n    \"ngayNhanHocVi\": \"2020-01-01\",\r\n    \"ngayHuong\": \"2025-06-01\",\r\n    \"ngayTuyenDung\": \"2018-06-01\",\r\n    \"ngaySinh\": \"1985-01-01\",\r\n    \"ngayCapCmnd\": \"2000-01-01\",\r\n    \"ngayNhanHocHam\": \"2022-01-01\",\r\n    \"ngayVaoDcsvnDuBi\": \"2012-01-01\",\r\n    \"ngayVaoDcsvnChinhThuc\": \"2014-01-01\",\r\n    \"donvichucnangDTO\": null,\r\n    \"bomonDTO\": null,\r\n    \"quequanDTO\": null,\r\n    \"dantocDTO\": null,\r\n    \"tongiaoDTO\": null,\r\n    \"chucvuDTO\": null,\r\n    \"ngachcongchucDTO\": null,\r\n    \"bacluongDTO\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/dantoc",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"dantoc"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Lấy danh sách dantoc",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo dantoc",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"tenDanToc\": \"Kinh\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/dantoc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"dantoc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật dantoc",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"tenDanToc\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/dantoc/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"dantoc",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xoá dantoc",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{ \"diaChi\": \"Hải Phòng\" }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/dantoc/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"dantoc",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "chucvu",
+					"item": [
+						{
+							"name": "canbo-chucvu",
+							"item": [
+								{
+									"name": "updateChucvu cập nhật chưc vụ cho cán bộ 1",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 1,\r\n    \"chucvuDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/chucvu",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"chucvu"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "addChucvu cập nhật chức vụ cho cán bộ 1 Copy",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "// Sửa số để gán",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/chucvu/1",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"chucvu",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "xoá chức vụ cho cán bộ 1",
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"soHieu\": \"CB001\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"hocVi\": \"Thạc sĩ\",\r\n    \"hocHam\": \"Phó giáo sư\",\r\n    \"lyLuanChinhTri\": \"Cao cấp\",\r\n    \"quanLyNhaNuoc\": \"Chuyên viên\",\r\n    \"ngoaiNgu\": \"Tiếng Anh\",\r\n    \"tinHoc\": \"Chứng chỉ B\",\r\n    \"thamGiaToChucCtxh\": \"Hội Chữ thập đỏ\",\r\n    \"nhomMau\": \"O\",\r\n    \"soBaoHiemXh\": \"012345678901\",\r\n    \"laThuongBinh\": \"Không\",\r\n    \"laConGiaDinhChinhSach\": \"Có\",\r\n    \"nhanXet\": \"Nhiệt tình, trách nhiệm\",\r\n    \"quanHamCaoNhat\": \"Đại tá\",\r\n    \"danhHieuPhongTang\": \"Chiến sĩ thi đua cấp Bộ\",\r\n    \"khenThuong\": \"Bằng khen Thủ tướng\",\r\n    \"kyLuat\": \"Không\",\r\n    \"tinhTrangSucKhoe\": \"Tốt\",\r\n    \"soTruongCongTac\": 5,\r\n    \"chieuCao\": 170,\r\n    \"canNang\": 65,\r\n    \"phuCapChucVu\": 0.5,\r\n    \"phuCaidhac\": 0.2,\r\n    \"version\": 1,\r\n    \"ngayNhapNgu\": \"2010-06-01\",\r\n    \"ngayXuatNgu\": \"2015-06-01\",\r\n    \"ngayVeHuu\": \"2030-01-01\",\r\n    \"ngayThoiViec\": \"2030-12-31\",\r\n    \"ngayNhanHocVi\": \"2020-01-01\",\r\n    \"ngayHuong\": \"2025-06-01\",\r\n    \"ngayTuyenDung\": \"2018-06-01\",\r\n    \"ngaySinh\": \"1985-01-01\",\r\n    \"ngayCapCmnd\": \"2000-01-01\",\r\n    \"ngayNhanHocHam\": \"2022-01-01\",\r\n    \"ngayVaoDcsvnDuBi\": \"2012-01-01\",\r\n    \"ngayVaoDcsvnChinhThuc\": \"2014-01-01\",\r\n    \"donvichucnangDTO\": null,\r\n    \"bomonDTO\": null,\r\n    \"quequanDTO\": null,\r\n    \"dantocDTO\": null,\r\n    \"tongiaoDTO\": null,\r\n    \"chucvuDTO\": null,\r\n    \"ngachcongchucDTO\": null,\r\n    \"bacluongDTO\": null\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:8080/api/canbo/1/chucvu",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "8080",
+											"path": [
+												"api",
+												"canbo",
+												"1",
+												"chucvu"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Lấy danh sách Chucvu",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/chucvu",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"chucvu"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo chucvu",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"tenChucVu\": \"123\",\r\n  \"version\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/chucvu",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"chucvu"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật chucvu",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"tenChucVu\": \"AAAAA\",\r\n  \"version\": 0\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/chucvu/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"chucvu",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xoá chucvu",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/chucvu/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"chucvu",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tìm kiếm tên chức vụ",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "bomon",
+					"item": [
+						{
+							"name": "Tạo mới bộ môn",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenBoMon\": \"Toán học\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/bomon/1/bomon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bomon",
+										"1",
+										"bomon"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật bộ môn",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenBoMon\": \"Toán học\",\r\n    \"donvichucnangDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/bomon/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bomon",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy danh sách bộ môn",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/bomon",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bomon"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy bộ môn theo ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/bomon/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bomon",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa bộ môn",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/bomon/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"bomon",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "danh sách khoán gọn",
+					"item": [
+						{
+							"name": "export-salary",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/canbo/export-salary/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"canbo",
+										"export-salary",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "quá trình lương",
+					"item": [
+						{
+							"name": "getall quá trình lương",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/quatrinhluong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"quatrinhluong"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete quá trình lương",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/quatrinhluong/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"quatrinhluong",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tạo quá trình lương",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"lyDoLenLuongSom\": \"lyDoChamLenLuong\",\r\n    \"ghiChu\": \"ghiChu\",\r\n    \"thoiGianTinhHuong\": \"\",\r\n    \"phanTranPhuCap\": 2,\r\n    \"thoiGianTangLuong\": \"\",\r\n    \"thoiGianChamLenLuong\": \"\",\r\n    \"lyDoChamLenLuong\": \"lyDoChamLenLuong\",\r\n    \"thoiGianLenLuongSom\": \"\",\r\n    \"donvichucnangDTO\": null,\r\n    \"canboDTO\": {\r\n        \"id\": 1\r\n    },\r\n    \"ngachcongchucDTO\": {\r\n        \"id\": 1\r\n    },\r\n    \"bacluongDTO\": {\r\n        \"id\": 1\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/quatrinhluong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"quatrinhluong"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "bậc lương",
+					"item": [
+						{
+							"name": "getall",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/bacluong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"bacluong"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/bacluong/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"bacluong",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "tạo bậc lương mới",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maBacLuong\": 1,\r\n    \"heSoLuong\": 2.34,\r\n    \"phuCapVuotKhung\": 0.5,\r\n    \"ngachcongchucDTO\": {\r\n        \"id\": 1\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/bacluong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"bacluong"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Ngách công chức",
+					"item": [
+						{
+							"name": "tạo ngách công chức",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maNgach\": \"maNgach\",\r\n    \"tenNgach\": \"tenNgach\",\r\n    \"soNamNangBacLuong\": 1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/ngachcongchuc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"ngachcongchuc"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maNgach\": \"maNgach\",\r\n    \"tenNgach\": \"tenNgach\",\r\n    \"soNamNangBacLuong\": 1,\r\n    \"bacluongDTOS\": {\r\n        \"id\": 1\r\n    }\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/ngachcongchuc",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"ngachcongchuc"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Lấy danh sách cán bộ Enable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canbo/true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo",
+								"true"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy danh sách cán bộ",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canbo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "tạo cán bộ mới",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"soHieu\": \"CB001\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"hocVi\": \"Thạc sĩ\",\r\n    \"hocHam\": \"Phó giáo sư\",\r\n    \"lyLuanChinhTri\": \"Cao cấp\",\r\n    \"quanLyNhaNuoc\": \"Chuyên viên\",\r\n    \"ngoaiNgu\": \"Tiếng Anh\",\r\n    \"tinHoc\": \"Chứng chỉ B\",\r\n    \"thamGiaToChucCtxh\": \"Hội Chữ thập đỏ\",\r\n    \"nhomMau\": \"O\",\r\n    \"soBaoHiemXh\": \"012345678901\",\r\n    \"laThuongBinh\": \"Không\",\r\n    \"laConGiaDinhChinhSach\": \"Có\",\r\n    \"nhanXet\": \"Nhiệt tình, trách nhiệm\",\r\n    \"quanHamCaoNhat\": \"Đại tá\",\r\n    \"danhHieuPhongTang\": \"Chiến sĩ thi đua cấp Bộ\",\r\n    \"khenThuong\": \"Bằng khen Thủ tướng\",\r\n    \"kyLuat\": \"Không\",\r\n    \"tinhTrangSucKhoe\": \"Tốt\",\r\n    \"soTruongCongTac\": 5,\r\n    \"chieuCao\": 170,\r\n    \"canNang\": 65,\r\n    \"phuCapChucVu\": 0.5,\r\n    \"phuCaidhac\": 0.2,\r\n    \"version\": 1,\r\n    \"enabled\": true,\r\n    \"ngayNhapNgu\": \"2010-06-01\",\r\n    \"ngayXuatNgu\": \"2015-06-01\",\r\n    \"ngayVeHuu\": \"2030-01-01\",\r\n    \"ngayNhanHocVi\": \"2020-01-01\",\r\n    \"ngayHuong\": \"2025-06-01\",\r\n    \"ngaySinh\": \"1985-01-01\",\r\n    \"ngayCapCmnd\": \"2000-01-01\",\r\n    \"ngayNhanHocHam\": \"2022-01-01\",\r\n    \"ngayVaoDcsvnDuBi\": \"2012-01-01\",\r\n    \"ngayVaoDcsvnChinhThuc\": \"2014-01-01\",\r\n     \"donvichucnangDTOz\": {\r\n        \"id\": 1\r\n    },\r\n    \"bacluongDTO\" : {\r\n        \"id\" : 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/canbo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cập nhật cán bộ",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"soHieu\": \"CB001231231231231231\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van 1A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"version\": 1,\r\n    \"enabled\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/canbo/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "xoá cán bộ",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"soHieu\": \"CB001\",\r\n    \"imageUrl\": \"https://example.com/image.jpg\",\r\n    \"ten\": \"Nguyen Van A\",\r\n    \"tenGoiKhac\": \"Van A\",\r\n    \"gioiTinh\": \"Nam\",\r\n    \"noiSinh\": \"Hà Nội\",\r\n    \"soCmnd\": \"0123456789\",\r\n    \"noiCapCmnd\": \"Hà Nội\",\r\n    \"noiDKHoKhauThuongTru\": \"Số 1, Đường ABC, Hà Nội\",\r\n    \"noiOHienNay\": \"Số 10, Đường XYZ, Hà Nội\",\r\n    \"ngheNghieidhiTuyenDung\": \"Kỹ sư phần mềm\",\r\n    \"coQuanTuyenDung\": \"Đại học Quốc gia\",\r\n    \"congViecDuocGiao\": \"Giảng viên\",\r\n    \"chucDanh\": \"Trưởng phòng\",\r\n    \"trinhDoGiaoDucPt\": \"12/12\",\r\n    \"trinhDoChuyenMon\": \"Thạc sĩ\",\r\n    \"hocVi\": \"Thạc sĩ\",\r\n    \"hocHam\": \"Phó giáo sư\",\r\n    \"lyLuanChinhTri\": \"Cao cấp\",\r\n    \"quanLyNhaNuoc\": \"Chuyên viên\",\r\n    \"ngoaiNgu\": \"Tiếng Anh\",\r\n    \"tinHoc\": \"Chứng chỉ B\",\r\n    \"thamGiaToChucCtxh\": \"Hội Chữ thập đỏ\",\r\n    \"nhomMau\": \"O\",\r\n    \"soBaoHiemXh\": \"012345678901\",\r\n    \"laThuongBinh\": \"Không\",\r\n    \"laConGiaDinhChinhSach\": \"Có\",\r\n    \"nhanXet\": \"Nhiệt tình, trách nhiệm\",\r\n    \"quanHamCaoNhat\": \"Đại tá\",\r\n    \"danhHieuPhongTang\": \"Chiến sĩ thi đua cấp Bộ\",\r\n    \"khenThuong\": \"Bằng khen Thủ tướng\",\r\n    \"kyLuat\": \"Không\",\r\n    \"tinhTrangSucKhoe\": \"Tốt\",\r\n    \"soTruongCongTac\": 5,\r\n    \"chieuCao\": 170,\r\n    \"canNang\": 65,\r\n    \"phuCapChucVu\": 0.5,\r\n    \"phuCaidhac\": 0.2,\r\n    \"version\": 1,\r\n    \"ngayNhapNgu\": \"2010-06-01\",\r\n    \"ngayXuatNgu\": \"2015-06-01\",\r\n    \"ngayVeHuu\": \"2030-01-01\",\r\n    \"ngayThoiViec\": \"2030-12-31\",\r\n    \"ngayNhanHocVi\": \"2020-01-01\",\r\n    \"ngayHuong\": \"2025-06-01\",\r\n    \"ngayTuyenDung\": \"2018-06-01\",\r\n    \"ngaySinh\": \"1985-01-01\",\r\n    \"ngayCapCmnd\": \"2000-01-01\",\r\n    \"ngayNhanHocHam\": \"2022-01-01\",\r\n    \"ngayVaoDcsvnDuBi\": \"2012-01-01\",\r\n    \"ngayVaoDcsvnChinhThuc\": \"2014-01-01\",\r\n    \"donvichucnangDTO\": null,\r\n    \"bomonDTO\": null,\r\n    \"quequanDTO\": null,\r\n    \"dantocDTO\": null,\r\n    \"tongiaoDTO\": null,\r\n    \"chucvuDTO\": null,\r\n    \"ngachcongchucDTO\": null,\r\n    \"bacluongDTO\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/canbo/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lấy danh sách cán bộ Disable",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/canbo/disable",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"canbo",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ADMIN",
+			"item": [
+				{
+					"name": "quyết định kỷ luật",
+					"item": [
+						{
+							"name": "Lấy danh sách quyết định kỷ luật",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinhkyluat",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinhkyluat"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy chi tiết quyết định kỷ luật",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinhkyluat/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinhkyluat",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới quyết định kỷ luật",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"soQuyetDinh\" : \"QĐ1\" ,\r\n    \"tenQuyetDinh\": \"Vô kỷ luật\",\r\n    \"noiDungQuyetDinh\": \"Cảnh cáo\",\r\n\r\n    \"ngayKy\": \"2025-01-11\",\r\n    \"canboDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinhkyluat",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinhkyluat"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới quyết định kỷ luật Copy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"lyDo\": \"Vô kỷ luật\",\r\n    \"ngayKy\": \"2025-01-11\",\r\n    \"noiDung\": \"Cảnh cáo\",\r\n    \"canboDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinhkyluat/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinhkyluat",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật quyết định kỷ luật",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"soQuyetDinh\" : \"QĐ1\" ,\r\n    \"tenQuyetDinh\": \"Vô kỷ luật\",\r\n    \"noiDungQuyetDinh\": \"Cảnh cáo nghiêm trọng\",\r\n\r\n    \"ngayKy\": \"2025-01-11\",\r\n    \"canboDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinhkyluat/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinhkyluat",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "quyết định",
+					"item": [
+						{
+							"name": "Lấy danh sách quyết định",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinh",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy chi tiết quyết định",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa quyết định",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới quyết định",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinh",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy danh sách quyết định Copy 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"soQuyetDinh\": \"QD001\",\r\n    \"tenQuyetDinh\": \"Kỷ luật\",\r\n    \"noiDungQuyetDinh\": \"Kỷ luật vi phạm nội quy\",\r\n    \"nguoiKy\": \"Nguyen Van A123\",\r\n    \"ngayKy\": \"2025-01-12\",\r\n    \"tuNgay\": \"2025-01-15\",\r\n    \"denNgay\": \"2025-02-15\",\r\n    \"canboDTO\": {\r\n        \"id\": 1\r\n    },\r\n    \"donvichucnangDTO\": {\r\n        \"id\": 1\r\n    },\r\n    \"loaiquyetdinhDTO\": {\r\n        \"id\": 1\r\n    }\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/quyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"quyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "loại quyết định",
+					"item": [
+						{
+							"name": "Lấy danh sách loại quyết định",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/loaiquyetdinh",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"loaiquyetdinh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới loại quyết định",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenLoaiQuyetDinh\": \"Kỷ luật\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/loaiquyetdinh",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"loaiquyetdinh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật loại quyết định",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenLoaiQuyetDinh\": \"Khen thưởng\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/loaiquyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"loaiquyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy loại quyết định theo ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/loaiquyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"loaiquyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy loại quyết định theo ID Copy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/loaiquyetdinh/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"loaiquyetdinh",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "đơn vị chức năng",
+					"item": [
+						{
+							"name": "Lấy danh sách đơn vị chức năng",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy đơn vị chức năng theo ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa đơn vị chức năng",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới đơn vị chức năng",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maDonVi\": \"DV01\",\r\n    \"tenDonVi\": \"Phòng Kế hoạch\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật đơn vị chức năng",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maDonVi\": \"DV02\",\r\n    \"tenDonVi\": \"Phòng Tài chính\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "loại hợp đồng",
+					"item": [
+						{
+							"name": "Lấy danh sách loại hợp đồng",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/loaihopdong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"loaihopdong"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy loại hợp đồng theo ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/loaihopdong/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"loaihopdong",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa loại hợp đồng",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/loaihopdong/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"loaihopdong",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới loại hợp đồng",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenLoaiHopDong\": \"loaihp1\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/loaihopdong",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"loaihopdong"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật loại hợp đồng",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tenLoaiHopDong\": \"loaihp1\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/api/loaihopdong/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"loaihopdong",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "hợp đồng cán bộ",
+					"item": [
+						{
+							"name": "Lấy danh hợp đồng cán bộ",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/api/hopdongcanbo",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"api",
+										"hopdongcanbo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lấy hợp đồng cán bộ theo ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Xóa hợp đồng cán bộ",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Tạo mới hợp đồng cán bộ",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maDonVi\": \"DV01\",\r\n    \"tenDonVi\": \"Phòng Kế hoạch\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cập nhật hợp đồng cán bộ",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"maDonVi\": \"DV02\",\r\n    \"tenDonVi\": \"Phòng Tài chính\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/admin/donvichucnang/1",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"admin",
+										"donvichucnang",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Thứ Tự",
+			"item": []
+		},
+		{
+			"name": "AuthenticationController Copy",
+			"item": [
+				{
+					"name": "reset-password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"verifyCode\": \"Q3uDOkG7XrBLTxpDWaZLuguVQ2wmwL9BGksVnFaKPpz5koCHScaRqvcXkQdHxqKy\",\r\n  \"password\": \"123\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login user",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userName\": \"ADMIN\",\r\n  \"password\": \"ADMIN1\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Math 101\",\r\n  \"studentIds\": []\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/forgot-password?email=hiepnx03@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"forgot-password"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "hiepnx03@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -6,6 +6,7 @@ import com.example.demo.dto.LoaiquyetdinhDTO;
 import com.example.demo.entity.Loaiquyetdinh;
 import com.example.demo.repository.LoaiquyetdinhRepository;
 import com.example.demo.service.LoaiquyetdinhService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,7 +42,7 @@ public class LoaiquyetdinhServiceImpl implements LoaiquyetdinhService {
     @Override
     public LoaiquyetdinhDTO getById(Long id) {
         Loaiquyetdinh loaiquyetdinh = loaiquyetdinhRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy loại quyết định với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại quyết định với ID: " + id));
         return loaiquyetdinhConverter.toDTO(loaiquyetdinh);
     }
 
@@ -55,7 +56,7 @@ public class LoaiquyetdinhServiceImpl implements LoaiquyetdinhService {
     @Override
     public LoaiquyetdinhDTO update(Long id, LoaiquyetdinhDTO dto) {
         Loaiquyetdinh existingLoaiquyetdinh = loaiquyetdinhRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy loại quyết định với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy loại quyết định với ID: " + id));
 
         existingLoaiquyetdinh.setTenLoaiQuyetDinh(dto.getTenLoaiQuyetDinh());
         existingLoaiquyetdinh.setVersion(dto.getVersion());
@@ -67,8 +68,17 @@ public class LoaiquyetdinhServiceImpl implements LoaiquyetdinhService {
     @Override
     public void delete(Long id) {
         if (!loaiquyetdinhRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy loại quyết định với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy loại quyết định với ID: " + id);
         }
         loaiquyetdinhRepository.deleteById(id);
     }
+
+
+    @Override
+    public Page<LoaiquyetdinhDTO> searchByTenLoaiQuyetDinh(String tenLoaiQuyetDinh, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Loaiquyetdinh> loaiquyetdinhPage = loaiquyetdinhRepository.findByTenLoaiQuyetDinhContainingIgnoreCase(tenLoaiQuyetDinh, pageable);
+        return loaiquyetdinhPage.map(loaiquyetdinhConverter::toDTO);
+    }
+
 }

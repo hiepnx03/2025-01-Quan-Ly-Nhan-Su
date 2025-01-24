@@ -6,6 +6,7 @@ import com.example.demo.dto.DanhsachkhoangonDTO;
 import com.example.demo.entity.Danhsachkhoangon;
 import com.example.demo.repository.DanhsachkhoangonRepository;
 import com.example.demo.service.DanhsachkhoangonService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -46,7 +47,7 @@ public class DanhsachkhoangonServiceImpl implements DanhsachkhoangonService {
     @Override
     public DanhsachkhoangonDTO getById(Long id) {
         Danhsachkhoangon entity = danhsachkhoangonRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách khoán gọn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách khoán gọn với ID: " + id));
         return danhsachkhoangonConverter.toDTO(entity);
     }
 
@@ -60,7 +61,7 @@ public class DanhsachkhoangonServiceImpl implements DanhsachkhoangonService {
     @Override
     public DanhsachkhoangonDTO update(Long id, DanhsachkhoangonDTO dto) {
         Danhsachkhoangon existingEntity = danhsachkhoangonRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy danh sách khoán gọn với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy danh sách khoán gọn với ID: " + id));
 
         existingEntity.setHoTenCanBo(dto.getHoTenCanBo());
         existingEntity.setSoDienThoai(dto.getSoDienThoai());
@@ -75,7 +76,7 @@ public class DanhsachkhoangonServiceImpl implements DanhsachkhoangonService {
     @Override
     public void delete(Long id) {
         if (!danhsachkhoangonRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy danh sách khoán gọn với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy danh sách khoán gọn với ID: " + id);
         }
         danhsachkhoangonRepository.deleteById(id);
     }

@@ -8,6 +8,7 @@ import com.example.demo.repository.BacluongRepository;
 import com.example.demo.repository.CanboRepository;
 import com.example.demo.repository.NgachcongchucRepository;
 import com.example.demo.service.QuatrinhluongService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 
@@ -49,7 +50,7 @@ public class QuatrinhluongServiceImpl implements QuatrinhluongService {
     @Override
     public QuatrinhluongDTO getById(Long id) {
         Quatrinhluong entity = quatrinhluongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quá trình lương với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quá trình lương với ID: " + id));
         return quatrinhluongConverter.toDTO(entity);
     }
 
@@ -57,13 +58,13 @@ public class QuatrinhluongServiceImpl implements QuatrinhluongService {
     public QuatrinhluongDTO create(QuatrinhluongDTO dto) {
         // Lấy các đối tượng liên quan từ cơ sở dữ liệu
         Canbo canbo = canboRepository.findById(dto.getCanboDTO().getId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy cán bộ với ID: " + dto.getCanboDTO().getId()));
 
         Bacluong bacluong = bacluongRepository.findById(dto.getBacluongDTO().getId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy bậc lương với ID: " + dto.getBacluongDTO().getId()));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy bậc lương với ID: " + dto.getBacluongDTO().getId()));
 
         Ngachcongchuc ngachcongchuc = ngachcongchucRepository.findById(dto.getNgachcongchucDTO().getId())
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy ngạch công chức với ID: " + dto.getNgachcongchucDTO().getId()));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy ngạch công chức với ID: " + dto.getNgachcongchucDTO().getId()));
 
         // Chuyển đổi từ DTO sang Entity
         Quatrinhluong entity = quatrinhluongConverter.toEntity(dto);
@@ -84,7 +85,7 @@ public class QuatrinhluongServiceImpl implements QuatrinhluongService {
     @Override
     public QuatrinhluongDTO update(Long id, QuatrinhluongDTO dto) {
         Quatrinhluong existingEntity = quatrinhluongRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy quá trình lương với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy quá trình lương với ID: " + id));
 
         existingEntity.setLyDoLenLuongSom(dto.getLyDoLenLuongSom());
         existingEntity.setGhiChu(dto.getGhiChu());
@@ -102,7 +103,7 @@ public class QuatrinhluongServiceImpl implements QuatrinhluongService {
     @Override
     public void delete(Long id) {
         if (!quatrinhluongRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy quá trình lương với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy quá trình lương với ID: " + id);
         }
         quatrinhluongRepository.deleteById(id);
     }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 
+import com.example.demo.dto.LoaihopdongDTO;
 import com.example.demo.dto.LoaihopdongnganhanDTO;
 import org.springframework.data.domain.Page;
 
@@ -13,4 +14,7 @@ public interface LoaihopdongnganhanService {
     LoaihopdongnganhanDTO create(LoaihopdongnganhanDTO loaihopdongnganhanDTO);
     LoaihopdongnganhanDTO update(Long id, LoaihopdongnganhanDTO loaihopdongnganhanDTO);
     void delete(Long id);
+
+    Page<LoaihopdongnganhanDTO> searchByTenLoaiHopDong(String tenLoaiHopDong, int pageNo, int pageSize);
+
 }

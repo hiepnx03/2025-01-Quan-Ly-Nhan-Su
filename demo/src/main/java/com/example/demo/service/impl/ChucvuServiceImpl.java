@@ -6,6 +6,7 @@ import com.example.demo.dto.ChucvuDTO;
 import com.example.demo.entity.Chucvu;
 import com.example.demo.repository.ChucvuRepository;
 import com.example.demo.service.ChucvuService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -47,7 +48,7 @@ public class ChucvuServiceImpl implements ChucvuService {
     public ChucvuDTO getById(Long id) {
         // Tìm kiếm chức vụ theo ID
         Chucvu chucvu = chucvuRepository.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
+                    .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy Chức vụ với ID: " + id));
         return chucvuConverter.toDTO(chucvu);
     }
 
@@ -63,7 +64,7 @@ public class ChucvuServiceImpl implements ChucvuService {
     public ChucvuDTO update(Long id, ChucvuDTO chucvuDTO) {
         // Tìm kiếm chức vụ theo ID
         Chucvu existingChucvu = chucvuRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Chức vụ với ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy Chức vụ với ID: " + id));
         existingChucvu.setTenChucVu(chucvuDTO.getTenChucVu());
         Chucvu updatedChucvu = chucvuRepository.save(existingChucvu);
         return chucvuConverter.toDTO(updatedChucvu);
@@ -73,8 +74,17 @@ public class ChucvuServiceImpl implements ChucvuService {
     public void delete(Long id) {
         // Kiểm tra chức vụ có tồn tại không
         if (!chucvuRepository.existsById(id)) {
-            throw new RuntimeException("Không tìm thấy Chức vụ với ID: " + id);
+            throw new EntityNotFoundException("Không tìm thấy Chức vụ với ID: " + id);
         }
         chucvuRepository.deleteById(id);
     }
+
+    @Override
+    public Page<ChucvuDTO> searchByTenChucVu(String tenChucVu, int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<Chucvu> chucvuPage = chucvuRepository.findByTenChucVuContainingIgnoreCase(tenChucVu, pageable);
+        return chucvuPage.map(chucvuConverter::toDTO);
+    }
+
+
 }

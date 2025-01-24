@@ -13,6 +13,7 @@ import com.example.demo.service.UserService;
 import com.example.demo.utils.JwtUtils;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.persistence.EntityNotFoundException;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -57,18 +58,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse add(UserDTO userDTO) {
         if (userRepository.findByUserName(userDTO.getUserName()) != null) {
-            throw new RuntimeException("Username already exists!");
+            throw new EntityNotFoundException("Username already exists!");
         }
 
         if (userRepository.findByEmail(userDTO.getEmail()) != null) {
-            throw new RuntimeException("Email already exists!");
+            throw new EntityNotFoundException("Email already exists!");
         }
 
         List<Role> roles = new ArrayList<>();
         // Duyệt qua danh sách các tên role và tìm kiếm các role trong cơ sở dữ liệu
         userDTO.getRoles().forEach(roleName -> {
             Role foundRole = roleRepository.findByName(roleName)
-                    .orElseThrow(() -> new RuntimeException("Role not found: " + roleName));
+                    .orElseThrow(() -> new EntityNotFoundException("Role not found: " + roleName));
             roles.add(foundRole);
         });
 
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(UserDTO userDTO) {
         if (userRepository.findByUserName(userDTO.getUserName()) != null) {
-            throw new RuntimeException("Username already exists!");
+            throw new EntityNotFoundException("Username already exists!");
         }
 
         userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
@@ -172,7 +173,7 @@ public class UserServiceImpl implements UserService {
             if (timeDifference < lockDuration) {
                 // Tài khoản vẫn bị khóa
                 long remainingLockTime = (lockDuration - timeDifference) / 1000; // thời gian còn lại tính bằng giây
-                throw new RuntimeException("Your account is locked. Please try again after " + remainingLockTime + " seconds.");
+                throw new EntityNotFoundException("Your account is locked. Please try again after " + remainingLockTime + " seconds.");
             } else {
                 // Thời gian khóa đã hết, reset lại failedAttempt và lockTime
                 user.setFailedAttempt(0);
@@ -191,7 +192,7 @@ public class UserServiceImpl implements UserService {
             if (user.getFailedAttempt() >= 5) {
                 user.setLockTime(new Date());
                 userRepository.save(user);
-                throw new RuntimeException("Your account is locked due to multiple failed login attempts. Please try again after 5 minutes.");
+                throw new EntityNotFoundException("Your account is locked due to multiple failed login attempts. Please try again after 5 minutes.");
             }
 
             userRepository.save(user);
@@ -268,7 +269,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUserByUsername(String username) {
         User user = userRepository.findByUserName(username);
         if (user == null) {
-            throw new RuntimeException("User not found with username: " + username);
+            throw new EntityNotFoundException("User not found with username: " + username);
         }
 
         UserDTO userDTO = new UserDTO();
@@ -287,7 +288,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUserById(Long id) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("User not found with ID: " + id));
 
         UserDTO userDTO = new UserDTO();
         userDTO.setUserName(user.getUserName());
@@ -304,7 +305,7 @@ public class UserServiceImpl implements UserService {
     public void forgotPassword(String email, String siteURL) {
         User user = userRepository.findByEmailAndStatus(email, 1);
         if (user == null) {
-            throw new RuntimeException("Email does not exists!");
+            throw new EntityNotFoundException("Email does not exists!");
         }
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
@@ -315,7 +316,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void resetPassword(String verificationCode, String password) {
         User user = userRepository.findByVerificationCode(verificationCode);
-        if (user == null) throw new RuntimeException("Account does not exist!");
+        if (user == null) throw new EntityNotFoundException("Account does not exist!");
         user.setPassword(passwordEncoder(password));
         System.out.println(user.getPassword());
         user.setVerificationCode(null);

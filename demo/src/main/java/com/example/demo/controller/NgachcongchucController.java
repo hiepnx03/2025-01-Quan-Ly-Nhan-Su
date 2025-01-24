@@ -8,7 +8,7 @@ import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.NgachcongchucDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.NgachcongchucService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -45,6 +45,24 @@ public class NgachcongchucController {
     ) {
         Page<NgachcongchucDTO> page = ngachcongchucService.getAllPage(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(page);
+    }
+
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))}
+    )
+    public ResponseEntity<ResponseObject> searchNgachCongChuc(
+            @RequestParam String keyword,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<NgachcongchucDTO> results = ngachcongchucService.searchByMaNgachOrSoNamNangBacLuongOrTenNgach(keyword, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách ngạch công chức tìm kiếm", results.getContent()));
     }
 
     @GetMapping("/{id}")

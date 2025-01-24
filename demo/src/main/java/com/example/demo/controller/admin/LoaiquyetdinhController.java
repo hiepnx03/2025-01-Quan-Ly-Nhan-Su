@@ -1,12 +1,10 @@
 package com.example.demo.controller.admin;
 
 import com.example.demo.constants.PageableConstant;
-import com.example.demo.dto.DonvichucnangDTO;
 import com.example.demo.dto.LoaiquyetdinhDTO;
-import com.example.demo.dto.QuyetdinhDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.LoaiquyetdinhService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -43,6 +41,23 @@ public class LoaiquyetdinhController  {
     ) {
         Page<LoaiquyetdinhDTO> loaiquyetdinhDTOPage = loaiquyetdinhService.getAllPage(pageNo, pageSize);
         return ResponseEntity.ok(loaiquyetdinhDTOPage);
+    }
+
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))})
+    public ResponseEntity<ResponseObject> searchLoaiQuyetDinh(
+            @RequestParam String tenLoaiQuyetDinh,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<LoaiquyetdinhDTO> results = loaiquyetdinhService.searchByTenLoaiQuyetDinh(tenLoaiQuyetDinh, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách loại quyết định tìm kiếm", results.getContent()));
     }
 
     @GetMapping("/{id}")

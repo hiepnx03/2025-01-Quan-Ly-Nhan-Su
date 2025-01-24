@@ -4,7 +4,7 @@ import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.CanboDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.CanboService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -178,7 +178,180 @@ public class CanboController {
     }
 
 
+    @GetMapping("/search/gioi-tinh")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByGioiTinh(
+            @RequestParam String gioiTinh,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByGioiTinh(gioiTinh, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo giới tính", results.getContent()));
+    }
+
+    @GetMapping("/search/dan-toc")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByDanToc(
+            @RequestParam Long danTocId,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByDanToc(danTocId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo dân tộc", results.getContent()));
+    }
+
+    @GetMapping("/search/ton-giao")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByTonGiao(
+            @RequestParam Long tonGiaoId,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByTonGiao(tonGiaoId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo tôn giáo", results.getContent()));
+    }
+
+    @GetMapping("/search/chuc-vu")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByChucVu(
+            @RequestParam Long chucVuId,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByChucVu(chucVuId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo chức vụ", results.getContent()));
+    }
+
+    @GetMapping("/search/chuc-danh")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByChucDanh(
+            @RequestParam String chucDanh,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByChucDanh(chucDanh, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo chức danh", results.getContent()));
+    }
+
+    @GetMapping("/search/don-vi-bo-mon")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByDonViBoMon(
+            @RequestParam Long donViBoMonId,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByDonViBoMon(donViBoMonId, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo đơn vị bộ môn", results.getContent()));
+    }
+
+    //GET http://localhost:8080/api/canbo/search/que-quan?queQuanId=1&pageNo=0&pageSize=5
+    @Operation(summary = "Tìm kiếm cán bộ theo quê quán", description = "API tìm kiếm danh sách cán bộ theo quê quán, có hỗ trợ phân trang.")
+    @GetMapping("/search/que-quan")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByQueQuan(
+            @RequestParam String queQuan,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByQueQuan(queQuan, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo quê quán", results.getContent()));
+    }
+
+    // GET http://localhost:8080/api/canbo/search/ngach-cong-chuc?ngachCongChucId=2&pageNo=0&pageSize=5
+    @GetMapping("/search/ngach-cong-chuc")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByNgachCongChuc(
+            @RequestParam String ngachCongChuc,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByNgachCongChuc(ngachCongChuc, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo ngạch công chức", results.getContent()));
+    }
+
+    // GET http://localhost:8080/api/canbo/search/don-vi-chuc-nang?donViChucNangId=3&pageNo=0&pageSize=5
+    @GetMapping("/search/don-vi-chuc-nang")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
+    public ResponseEntity<ResponseObject> searchByDonViChucNang(
+            @RequestParam String donViChucNang,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<CanboDTO> results = canboService.getByDonViChucNang(donViChucNang, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách cán bộ theo đơn vị chức năng", results.getContent()));
+    }
+
     @GetMapping("/export-salary/{id}")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "202", description = "Updated"),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))
+    })
     public ResponseEntity<byte[]> exportSalaryExcel(@PathVariable Long id) {
         try {
             byte[] excelFile = canboService.exportSalaryExcel(id);

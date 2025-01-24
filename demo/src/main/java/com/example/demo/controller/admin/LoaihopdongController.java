@@ -4,7 +4,7 @@ import com.example.demo.constants.PageableConstant;
 import com.example.demo.dto.LoaihopdongDTO;
 import com.example.demo.dto.response.ResponseObject;
 import com.example.demo.service.LoaihopdongService;
-import com.example.demo.viewmodel.ErrorVm;
+import com.example.demo.constants.ErrorVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -42,6 +42,25 @@ public class LoaihopdongController {
     ) {
         Page<LoaihopdongDTO> loaihopdongDTOPage = loaihopdongService.getAllPage(pageNo, pageSize);
         return ResponseEntity.status(HttpStatus.OK).body(loaihopdongDTOPage);
+    }
+
+
+    @GetMapping("/search")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Success", content = @Content()),
+            @ApiResponse(responseCode = "404", description = "Not found",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class))),
+            @ApiResponse(responseCode = "400", description = "Bad request",
+                    content = @Content(schema = @Schema(implementation = ErrorVm.class)))}
+    )
+    public ResponseEntity<ResponseObject> searchLoaiHopDong(
+            @RequestParam String tenLoaiHopDong,
+            @RequestParam(defaultValue = "0") int pageNo,
+            @RequestParam(defaultValue = "10") int pageSize) {
+
+        Page<LoaihopdongDTO> results = loaihopdongService.searchByTenLoaiHopDong(tenLoaiHopDong, pageNo, pageSize);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(new ResponseObject("200", "Danh sách loại hợp đồng tìm kiếm", results.getContent()));
     }
 
     @GetMapping("/{id}")

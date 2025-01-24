@@ -13,4 +13,7 @@ public interface LoaiquyetdinhRepository extends JpaRepository<Loaiquyetdinh, Lo
 
     @Query("select l from Loaiquyetdinh l")
     Page<Loaiquyetdinh> findAllPage(Pageable pageable);
+
+    Page<Loaiquyetdinh> findByTenLoaiQuyetDinhContainingIgnoreCase(String tenLoaiQuyetDinh, Pageable pageable);
+
 }

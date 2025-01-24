@@ -13,4 +13,7 @@ public interface TongiaoRepository extends JpaRepository<Tongiao, Long> {
 
     @Query("select t from Tongiao t")
     Page<Tongiao> findAllPage(Pageable pageable);
+
+
+    Page<Tongiao> findByTenTonGiaoContainingIgnoreCase(String tenTonGiao, Pageable pageable);
 }

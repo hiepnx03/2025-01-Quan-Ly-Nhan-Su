@@ -34,6 +34,16 @@ public interface CanboService {
 
 
 
+    Page<CanboDTO> getByGioiTinh(String gioiTinh, int pageNo, int pageSize);
+    Page<CanboDTO> getByDanToc(Long danTocId, int pageNo, int pageSize);
+    Page<CanboDTO> getByTonGiao(Long tonGiaoId, int pageNo, int pageSize);
+    Page<CanboDTO> getByChucVu(Long chucVuId, int pageNo, int pageSize);
+    Page<CanboDTO> getByChucDanh(String chucDanh, int pageNo, int pageSize);
+    Page<CanboDTO> getByDonViBoMon(Long donViBoMonId, int pageNo, int pageSize);
+    Page<CanboDTO> getByQueQuan(String queQuan, int pageNo, int pageSize);
+    Page<CanboDTO> getByNgachCongChuc(String ngachCongChuc, int pageNo, int pageSize);
+    Page<CanboDTO> getByDonViChucNang(String donViChucNang, int pageNo, int pageSize);
+
     byte[] exportSalaryExcel(Long canboId) throws IOException;
 
 }

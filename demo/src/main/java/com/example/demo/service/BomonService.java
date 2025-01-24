@@ -14,5 +14,6 @@ public interface BomonService {
     BomonDTO update(Long donvichucnangId, Long bomonId, BomonDTO bomonDTO);     // Cập nhật bộ môn
     void delete(Long id);
 
+    Page<BomonDTO> searchByTenBoMon(String tenBoMon, int pageNo, int pageSize);
 
 }
